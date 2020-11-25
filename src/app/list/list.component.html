@@ -1,1 +1,6 @@
-<p>list works!</p>
+<div *ngFor="let val of listeners">
+    {{val.name}}
+</div>
+<div *ngFor="let val of listeners">
+    {{ val.state | async }}
+</div>
