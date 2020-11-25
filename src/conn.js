@@ -281,7 +281,9 @@ var servConn = {
             });
 
             this._socket.on('connect_error', function () {
-                $('.splash-screen-text').css('color', '#002951');
+                if (typeof $ !== 'undefined') {
+                    $('.splash-screen-text').css('color', '#002951');
+                }
 
                 that.reconnect(connOptions);
             });
@@ -400,7 +402,7 @@ var servConn = {
     getVersion:       function (callback) {
         if (!this._checkConnection('getVersion', arguments)) return;
 
-        this._socket.emit('getVersion', function (version) {
+        this._socket.emit('getVersion', function (isOk, version) {
             if (callback) callback(version);
         });
     },
@@ -414,7 +416,7 @@ var servConn = {
             console.log('socket.io not initialized');
             return;
         }
-        this._socket.emit('getVersion', function (version) {
+        this._socket.emit('getVersion', function (isOk, version) {
             if (callback)
                 callback(version);
         });

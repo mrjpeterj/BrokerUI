@@ -1,40 +1,41 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
-import servConn from  '../conn.js';
-
+import servConn from '../conn';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IobrokerService {
-    private states: { [key: string]: BehaviorSubject<string> };
+    private states: { [key: string]: null | BehaviorSubject<unknown> };
+
+    public Services: BehaviorSubject<string[]>;
 
     constructor() {
 
         this.states = {};
-
-        servConn.namespace   = 'ang.0';
-        servConn._useStorage = false;
+        this.Services = new BehaviorSubject(['']);
 
         servConn.init({
             name: 'ang.0',
-            connLink: 'http://pi1:8084/',
+            connLink: 'https://pi1:8084/',
             socketSession: ''
         }, this);
     }
 
-    onConnChange(isConnected) {
+    onConnChange(isConnected: boolean) {
         if (isConnected) {
             console.log('connected');
-            servConn.getStates((err, states) => {
-                let count = 0;
-                for (var id in states) {
-                    count++;
-                }
-                console.log('Received ' + count + ' states.');
-                states = states;
+            servConn.getStates((err: any, states: any) => {
+                Object.keys(states).forEach((id) => {
+                    if (states[id] != null) {
+                        this.states[id] = new BehaviorSubject(states[id].val);
+                    }
+                });
+
+                this.Services.next(Object.getOwnPropertyNames(this.states));
             });
         } else {
             console.log('disconnected');
@@ -44,20 +45,36 @@ export class IobrokerService {
     onRefresh() {
         window.location.reload();
     }
-    onUpdate(id, state) {
+    onUpdate(id: string, state: any) {
         setTimeout(() => {
             // console.log('NEW VALUE of ' + id + ': ' + JSON.stringify(state));
 
-            if (this.states[id] == null) {
+            const stateSub = this.states[id];
+
+            if (stateSub == null) {
                 this.states[id] = new BehaviorSubject(state.val);
+
+                this.Services.next(Object.getOwnPropertyNames(this.states));
             } else {
-                this.states[id].next(state.val);
+                stateSub.next(state.val);
             }
         }, 0);
     }
 
-    onError(err) {
+    onError(err: any) {
         const msg = 'Cannot execute ' + err.command + ' for ' + err.arg + ', because of insufficient permissions';
         window.alert(msg);
+    }
+
+    ListenOn(service: string): null | Observable<unknown> {
+        const srv = this.states[service];
+
+        if (srv != null) {
+            return srv.pipe(
+                distinctUntilChanged()
+            );
+        } else {
+            return null;
+        }
     }
 }
