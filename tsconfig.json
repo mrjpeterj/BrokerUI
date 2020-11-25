@@ -11,6 +11,14 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
+
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+
+    "strict": true,
+
     "typeRoots": [
       "node_modules/@types"
     ],
