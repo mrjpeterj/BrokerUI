@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IobrokerService } from '../iobroker.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 class MachineState {
     public name: string;
@@ -40,16 +39,10 @@ export class ListComponent implements OnInit {
                 });
 
                 pingSrvs.forEach(element => {
-                    const listener = this.broker.ListenOn(element);
-                    if (listener != null) {
-                        const stateHolder = new MachineState(element.substr(11), listener.pipe(
-                            map((val) => {
-                                return val == true;
-                            })
-                        ));
+                    const listener = this.broker.ListenForBool(element);
+                    const stateHolder = new MachineState(element.substr(11), listener);
 
-                        this.listeners.push(stateHolder);
-                    }
+                    this.listeners.push(stateHolder);
                 });
             }
         });

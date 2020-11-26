@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 
 import servConn from '../conn';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class IobrokerService {
     private states: { [key: string]: null | BehaviorSubject<unknown> };
@@ -66,15 +66,26 @@ export class IobrokerService {
         window.alert(msg);
     }
 
-    ListenOn(service: string): null | Observable<unknown> {
-        const srv = this.states[service];
+    private GetOrCreateService(service: string): Observable<unknown> {
+        let srv = this.states[service];
+        if (srv == null) {
+            const initVal: unknown = null;
+            srv = new BehaviorSubject(initVal);
 
-        if (srv != null) {
-            return srv.pipe(
-                distinctUntilChanged()
-            );
-        } else {
-            return null;
+            this.states[service] = srv;
         }
+
+        return srv;
+    }
+
+    ListenForBool(service: string): Observable<boolean> {
+        const srv = this.GetOrCreateService(service);
+
+        return srv.pipe(
+            distinctUntilChanged(),
+            map((val) => {
+                return val == true;
+            })
+        );
     }
 }
