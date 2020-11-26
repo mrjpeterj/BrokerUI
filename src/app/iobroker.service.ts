@@ -3,12 +3,15 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
-import servConn from '../conn';
+import { ServiceConn } from '../conn';
 
 @Injectable({
     providedIn: 'root'
 })
 export class IobrokerService {
+
+    private servConn: ServiceConn;
+
     private states: { [key: string]: null | BehaviorSubject<unknown> };
 
     public Services: BehaviorSubject<string[]>;
@@ -18,7 +21,9 @@ export class IobrokerService {
         this.states = {};
         this.Services = new BehaviorSubject(['']);
 
-        servConn.init({
+        this.servConn = new ServiceConn();
+
+        this.servConn.init({
             name: 'ang.0',
             connLink: 'https://pi1:8084/',
             socketSession: ''
@@ -28,7 +33,7 @@ export class IobrokerService {
     onConnChange(isConnected: boolean) {
         if (isConnected) {
             console.log('connected');
-            servConn.getStates((err: any, states: any) => {
+            this.servConn.getStates((err: any, states: any) => {
                 Object.keys(states).forEach((id) => {
                     if (states[id] != null) {
                         this.states[id] = new BehaviorSubject(states[id].val);

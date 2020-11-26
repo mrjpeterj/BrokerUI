@@ -12,7 +12,7 @@
     "importHelpers": true,
     "target": "es2015",
 
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
