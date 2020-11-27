@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, Observable } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { ServiceConn } from '../conn';
+
+import { BrokerServices } from './broker/services';
+import { BrokerState } from './broker/state';
+import { BrokerDevice } from './broker/device';
 
 @Injectable({
     providedIn: 'root'
@@ -12,14 +15,11 @@ export class IobrokerService {
 
     private servConn: ServiceConn;
 
-    private states: { [key: string]: null | BehaviorSubject<unknown> };
-
-    public Services: BehaviorSubject<string[]>;
+    private services: BrokerServices;
 
     constructor() {
 
-        this.states = {};
-        this.Services = new BehaviorSubject(['']);
+        this.services = new BrokerServices();
 
         this.servConn = new ServiceConn();
 
@@ -33,14 +33,43 @@ export class IobrokerService {
     onConnChange(isConnected: boolean) {
         if (isConnected) {
             console.log('connected');
-            this.servConn.getStates((err: any, states: any) => {
-                Object.keys(states).forEach((id) => {
-                    if (states[id] != null) {
-                        this.states[id] = new BehaviorSubject(states[id].val);
-                    }
-                });
 
-                this.Services.next(Object.getOwnPropertyNames(this.states));
+            this.servConn.getObjects(false, (err: any, data: any) => {
+                if (data != null) {
+                    Object.getOwnPropertyNames(data).sort().forEach((dataKey) => {
+                        const item = data[dataKey];
+
+                        if (item.type === 'channel') {
+                            let role = item.common.role;
+                            if (role == null) {
+                                role = '';
+                            }
+
+                            const dev = this.services.GetDeviceFor(item._id);
+                            if (dev != null) {
+                                dev.GetOrCreateChannel(item.common.name, item._id, role);
+                            } else {
+                                const a = 0;
+                            }
+                        } else if (item.type === 'device') {
+                            this.services.CreateDevice(item.common.name, item._id);
+                        } else if (item.type === 'state') {
+                            const channel = this.services.GetChannelFor(item._id);
+                            if (channel != null) {
+                                const canRead = item.common.read;
+                                const canWrite = item.common.write;
+
+                                channel.AddState(new BrokerState(item.common.name, item._id, item.common.type, canRead, canWrite));
+                            }
+                        } else if (item.type === 'instance') {
+                            // Not interested
+                        } else if (item.type === 'enum') {
+
+                        } else {
+                            console.log('unknown obj type ' + item.type);
+                        }
+                    });
+                }
             });
         } else {
             console.log('disconnected');
@@ -54,15 +83,7 @@ export class IobrokerService {
         setTimeout(() => {
             // console.log('NEW VALUE of ' + id + ': ' + JSON.stringify(state));
 
-            const stateSub = this.states[id];
-
-            if (stateSub == null) {
-                this.states[id] = new BehaviorSubject(state.val);
-
-                this.Services.next(Object.getOwnPropertyNames(this.states));
-            } else {
-                stateSub.next(state.val);
-            }
+            this.services.UpdateState(id, state.val);
         }, 0);
     }
 
@@ -71,26 +92,11 @@ export class IobrokerService {
         window.alert(msg);
     }
 
-    private GetOrCreateService(service: string): Observable<unknown> {
-        let srv = this.states[service];
-        if (srv == null) {
-            const initVal: unknown = null;
-            srv = new BehaviorSubject(initVal);
-
-            this.states[service] = srv;
-        }
-
-        return srv;
+    public GetDeviceFor(id: string): Observable<BrokerDevice> {
+        return this.services.ListenForDevice(id);
     }
 
-    ListenForBool(service: string): Observable<boolean> {
-        const srv = this.GetOrCreateService(service);
-
-        return srv.pipe(
-            distinctUntilChanged(),
-            map((val) => {
-                return val == true;
-            })
-        );
+    public GetState(stateId: string): BrokerState | null {
+        return this.services.GetState(stateId);
     }
 }

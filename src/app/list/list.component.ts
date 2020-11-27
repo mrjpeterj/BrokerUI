@@ -30,22 +30,20 @@ export class ListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.broker.Services.subscribe({
-            next: (srvs) => {
-                this.listeners.splice(0, this.listeners.length);
+        this.broker.GetDeviceFor('ping.0.pi1').subscribe({
+            next: (device) => {
+                const channel = device.GetChannelFor(device.id);
+                if (channel != null) {
+                    const states = channel.GetStates();
 
-                const pingSrvs = srvs.filter((val, idx, list) => {
-                    return val.startsWith('ping.0.pi1');
-                });
+                    for (const state of states) {
+                        const listener = state.ListenForBool();
+                        const stateHolder = new MachineState(state.name.substring(6), listener);
 
-                pingSrvs.forEach(element => {
-                    const listener = this.broker.ListenForBool(element);
-                    const stateHolder = new MachineState(element.substr(11), listener);
-
-                    this.listeners.push(stateHolder);
-                });
+                        this.listeners.push(stateHolder);
+                    }
+                }
             }
         });
     }
-
 }
