@@ -265,8 +265,6 @@ export class ServiceConn {
                         clearInterval(that._connectInterval);
                         that._connectInterval = null;
                     }
-                    var elem = document.getElementById('server-disconnect');
-                    if (elem) elem.style.display = 'none';
 
                     that._socket.emit('name', connOptions.name);
                     console.log((new Date()).toISOString() + ' Connected => authenticate');
@@ -307,13 +305,9 @@ export class ServiceConn {
                     that._isConnected = false;
                     if (that._connCallbacks.onConnChange) {
                         setTimeout(function () {
-                            var elem = document.getElementById('server-disconnect');
-                            if (elem) elem.style.display = '';
                             that._connCallbacks.onConnChange(that._isConnected);
                         }, 5000);
                     } else {
-                        var elem = document.getElementById('server-disconnect');
-                        if (elem) elem.style.display = '';
                     }
 
                     // reconnect
