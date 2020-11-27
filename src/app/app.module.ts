@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatCardModule } from '@angular/material/card';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,7 +14,8 @@ import { LightsComponent } from './hue/lights/lights.component';
 @NgModule({
     declarations: [
         AppComponent,
-        ListComponent
+        ListComponent,
+        LightsComponent
     ],
     imports: [
         AppRoutingModule,
@@ -22,6 +24,7 @@ import { LightsComponent } from './hue/lights/lights.component';
         FlexLayoutModule,
 
         MatCardModule,
+        MatSlideToggleModule
     ],
     providers: [],
     bootstrap: [AppComponent]
