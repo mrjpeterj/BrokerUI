@@ -1,18 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { BehaviorSubject, Observable } from 'rxjs';
-
 import { IobrokerService } from '../../iobroker.service';
-
-class LightState {
-    public name: string;
-    public state: Observable<boolean>;
-
-    constructor(name: string, state: Observable<boolean>) {
-        this.name = name;
-        this.state = state;
-    }
-}
+import { LightState } from '../lightstate';
 
 @Component({
     selector: 'app-hue-lights',
@@ -45,12 +34,11 @@ export class LightsComponent implements OnInit {
                         const lightName = channel.name;
                         const lightState = channel.GetState(channel.id + '.on');
                         if (lightState != null) {
-                            this.lights.push(new LightState(lightName, lightState.ListenForBool()));
+                            this.lights.push(new LightState(lightName, lightState.id, lightState.ListenForBool(), this.broker));
                         }
                     }
                 }
             }
         });
     }
-
 }

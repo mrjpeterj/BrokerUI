@@ -99,4 +99,11 @@ export class IobrokerService {
     public GetState(stateId: string): BrokerState | null {
         return this.services.GetState(stateId);
     }
+
+    public SetState(stateId: string, value: unknown) {
+        const state = this.GetState(stateId);
+        if (state != null) {
+            this.servConn.setState(stateId, value);
+        }
+    }
 }

@@ -10,12 +10,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListComponent } from './list/list.component';
 import { LightsComponent } from './hue/lights/lights.component';
+import { LightComponent } from './hue/light/light.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         ListComponent,
-        LightsComponent
+        LightsComponent,
+        LightComponent
     ],
     imports: [
         AppRoutingModule,
