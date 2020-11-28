@@ -69,6 +69,22 @@ export class IobrokerService {
                             console.log('unknown obj type ' + item.type);
                         }
                     });
+
+                    // now get the values
+                    this.servConn.getStates((err1: any, data1: any) => {
+                        if (data1 != null) {
+                            Object.getOwnPropertyNames(data1).forEach((stateId) => {
+                                const dataItem = data1[stateId];
+
+                                if (dataItem != null) {
+                                    const state = this.GetState(stateId);
+                                    if (state != null) {
+                                        state.Update(dataItem.val);
+                                    }
+                                }
+                            });
+                        }
+                    });
                 }
             });
         } else {
