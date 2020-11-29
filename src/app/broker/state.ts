@@ -28,6 +28,11 @@ export class BrokerState {
     }
 
     public ListenForBool(): Observable<boolean> {
+
+        if (this.canRead === false) {
+            throw new Error('Invalid');
+        }
+
         return this.value.pipe(
             distinctUntilChanged(),
             map((val) => {
