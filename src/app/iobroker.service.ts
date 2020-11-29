@@ -25,7 +25,7 @@ export class IobrokerService {
 
         this.servConn.init({
             name: 'ang.0',
-            connLink: 'https://pi1:8084/',
+            connLink: 'http://pi1:8084/',
             socketSession: ''
         }, this);
     }
