@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+
 import { LightState } from '../lightstate';
 
 @Component({

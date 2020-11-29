@@ -4,7 +4,7 @@ declare var session: any;
 declare var io: any;
 declare var socketNamespace: string;
 declare var socketUrl: string;
-declare var socketSession;
+declare var socketSession: any;
 declare var socketForceWebSockets: any;
 declare var storage: any;
 

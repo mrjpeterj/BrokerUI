@@ -48,8 +48,6 @@ export class IobrokerService {
                             const dev = this.services.GetDeviceFor(item._id);
                             if (dev != null) {
                                 dev.GetOrCreateChannel(item.common.name, item._id, role);
-                            } else {
-                                const a = 0;
                             }
                         } else if (item.type === 'device') {
                             this.services.CreateDevice(item.common.name, item._id);

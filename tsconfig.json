@@ -13,8 +13,11 @@
     "target": "es2015",
 
     "noImplicitAny": false,
+    "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
     "strictNullChecks": true,
 
     "strict": true,
