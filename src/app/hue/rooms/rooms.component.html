@@ -1,0 +1,6 @@
+<div *ngFor="let val of rooms">
+    <a (click)="OnRoomClicked(val)">
+        {{ val.Name }}
+        <mat-icon>launch</mat-icon>
+    </a>
+</div>

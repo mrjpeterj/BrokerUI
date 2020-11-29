@@ -1,0 +1,8 @@
+<mat-card>
+    <mat-card-title>{{room.Name}}</mat-card-title>
+    <mat-card-content>
+        <div *ngFor="let scene of room.scenes">
+            {{ room.GetSceneName(scene) }} <button mat-button (click)="SelectScene(scene)">Select</button>
+        </div>
+    </mat-card-content>
+</mat-card>

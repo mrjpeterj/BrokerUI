@@ -1,14 +1,21 @@
-<div fxLayout="row">
+<div fxLayout="row wrap">
     <mat-card>
-        <mat-card-header>Machines</mat-card-header>
-        <mat-card-content>
-            <app-list></app-list>
-        </mat-card-content>
-    </mat-card>
-    <mat-card>
-        <mat-card-header>Lights</mat-card-header>
+        <mat-card-title>Lights</mat-card-title>
         <mat-card-content>
             <app-hue-lights></app-hue-lights>
         </mat-card-content>
     </mat-card>
+    <mat-card>
+        <mat-card-title>Rooms</mat-card-title>
+        <mat-card-content>
+            <app-hue-rooms></app-hue-rooms>
+        </mat-card-content>
+    </mat-card>
+    <mat-card>
+        <mat-card-title>Machines</mat-card-title>
+        <mat-card-content>
+            <app-list></app-list>
+        </mat-card-content>
+    </mat-card>
+
 </div>
