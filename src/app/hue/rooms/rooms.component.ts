@@ -40,7 +40,8 @@ export class RoomsComponent implements OnInit {
 
     public OnRoomClicked(room: RoomState) {
         this.dialog.open(RoomComponent, {
-            data: room
+            data: room,
+            maxHeight: '90%'
         });
     }
 }
