@@ -11,7 +11,7 @@ export class RoomState {
         this.channel = roomChannel;
 
         this.scenes = this.channel.GetStates().filter((state) => {
-            return state.name.startsWith("Scene");
+            return state.name.startsWith('Scene');
         });
     }
 
