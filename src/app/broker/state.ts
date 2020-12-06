@@ -1,20 +1,19 @@
-import { BehaviorSubject, Observable } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+
+import * as ioBroker from 'types/iobroker';
 
 export class BrokerState {
     public name: string;
     public id: string;
-    public type: string;
 
-    private canRead: boolean;
-    private canWrite: boolean;
+    protected canRead: boolean;
+    protected canWrite: boolean;
 
-    private value: BehaviorSubject<unknown>;
+    protected value: BehaviorSubject<unknown>;
 
-    constructor(name: string, id: string, type: string, canRead: boolean, canWrite: boolean) {
+    protected constructor(name: string, id: string, canRead: boolean, canWrite: boolean) {
         this.name = name;
         this.id = id;
-        this.type = type;
         this.canRead = canRead;
         this.canWrite = canWrite;
 
@@ -23,21 +22,7 @@ export class BrokerState {
         this.value = new BehaviorSubject(initVal);
     }
 
-    public Update(val: unknown) {
-        this.value.next(val);
-    }
-
-    public ListenForBool(): Observable<boolean> {
-
-        if (this.canRead === false) {
-            throw new Error('Invalid');
-        }
-
-        return this.value.pipe(
-            distinctUntilChanged(),
-            map((val) => {
-                return val == true;
-            })
-        );
+    public Update(state: ioBroker.State) {
+        this.value.next(state.val);
     }
 }

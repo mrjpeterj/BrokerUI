@@ -2,11 +2,15 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
+import * as ioBroker from 'types/iobroker';
+
 import { ServiceConn } from '../conn';
 
 import { BrokerServices } from './broker/services';
 import { BrokerState } from './broker/state';
+import { BrokerStateMaker } from './broker/statemaker';
 import { BrokerDevice } from './broker/device';
+import { BrokerHelpers } from './broker/helpers';
 
 @Injectable({
     providedIn: 'root'
@@ -37,27 +41,32 @@ export class IobrokerService {
             this.servConn.getObjects(false, (err: any, data: any) => {
                 if (data != null) {
                     Object.getOwnPropertyNames(data).sort().forEach((dataKey) => {
-                        const item = data[dataKey];
+                        const item: ioBroker.BaseObject = data[dataKey];
 
                         if (item.type === 'channel') {
-                            let role = item.common.role;
+                            const chItem = item as ioBroker.ChannelObject;
+                            let role = chItem.common.role;
                             if (role == null) {
                                 role = '';
                             }
 
                             const dev = this.services.GetDeviceFor(item._id);
                             if (dev != null) {
-                                dev.GetOrCreateChannel(item.common.name, item._id, role);
+                                dev.GetOrCreateChannel(BrokerHelpers.GetString(chItem.common.name), item._id, role);
                             }
                         } else if (item.type === 'device') {
-                            this.services.CreateDevice(item.common.name, item._id);
+                            const devItem = item as ioBroker.DeviceObject;
+
+                            this.services.CreateDevice(BrokerHelpers.GetString(devItem.common.name), item._id);
                         } else if (item.type === 'state') {
                             const channel = this.services.GetChannelFor(item._id);
                             if (channel != null) {
-                                const canRead = item.common.read;
-                                const canWrite = item.common.write;
+                                const stateItem = item as ioBroker.StateObject;
 
-                                channel.AddState(new BrokerState(item.common.name, item._id, item.common.type, canRead, canWrite));
+                                const state = BrokerStateMaker.Create(item._id, stateItem.common);
+                                if (state != null) {
+                                    channel.AddState(state);
+                                }
                             }
                         } else if (item.type === 'instance') {
                             // Not interested
@@ -72,12 +81,12 @@ export class IobrokerService {
                     this.servConn.getStates((err1: any, data1: any) => {
                         if (data1 != null) {
                             Object.getOwnPropertyNames(data1).forEach((stateId) => {
-                                const dataItem = data1[stateId];
+                                const dataItem = data1[stateId] as ioBroker.State;
 
                                 if (dataItem != null) {
                                     const state = this.GetState(stateId);
                                     if (state != null) {
-                                        state.Update(dataItem.val);
+                                        state.Update(dataItem);
                                     }
                                 }
                             });
@@ -93,11 +102,11 @@ export class IobrokerService {
     onRefresh() {
         window.location.reload();
     }
-    onUpdate(id: string, state: any) {
+    onUpdate(id: string, state: ioBroker.State) {
         setTimeout(() => {
             // console.log('NEW VALUE of ' + id + ': ' + JSON.stringify(state));
 
-            this.services.UpdateState(id, state.val);
+            this.services.UpdateState(id, state);
         }, 0);
     }
 
@@ -114,10 +123,9 @@ export class IobrokerService {
         return this.services.GetState(stateId);
     }
 
-    public SetState(stateId: string, value: unknown) {
-        const state = this.GetState(stateId);
+    public SetState(state: BrokerState, value: unknown) {
         if (state != null) {
-            this.servConn.setState(stateId, { val: value });
+            this.servConn.setState(state.id, { val: value });
         }
     }
 }

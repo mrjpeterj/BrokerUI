@@ -1,6 +1,8 @@
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
+import * as ioBroker from 'types/iobroker';
+
 import { BrokerChannel } from './channel';
 import { BrokerDevice } from './device';
 import { BrokerState } from './state';
@@ -79,10 +81,10 @@ export class BrokerServices {
         return channel.GetState(stateId);
     }
 
-    public UpdateState(stateId: string, value: unknown) {
-        const state = this.GetState(stateId);
-        if (state != null) {
-            state.Update(value);
+    public UpdateState(stateId: string, stateVal: ioBroker.State) {
+        const stateObj = this.GetState(stateId);
+        if (stateObj != null) {
+            stateObj.Update(stateVal);
         }
     }
 }
