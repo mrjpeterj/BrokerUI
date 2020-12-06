@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +17,8 @@ import { LightsComponent } from './hue/lights/lights.component';
 import { LightComponent } from './hue/light/light.component';
 import { RoomsComponent } from './hue/rooms/rooms.component';
 import { RoomComponent } from './hue/room/room.component';
+import { LightsettingsComponent } from './hue/lightsettings/lightsettings.component';
+import { SliderComponent } from './common/slider/slider.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +27,9 @@ import { RoomComponent } from './hue/room/room.component';
         LightsComponent,
         LightComponent,
         RoomsComponent,
-        RoomComponent
+        RoomComponent,
+        LightsettingsComponent,
+        SliderComponent
     ],
     imports: [
         AppRoutingModule,
@@ -36,6 +41,7 @@ import { RoomComponent } from './hue/room/room.component';
         MatCardModule,
         MatDialogModule,
         MatIconModule,
+        MatSliderModule,
         MatSlideToggleModule
     ],
     providers: [],

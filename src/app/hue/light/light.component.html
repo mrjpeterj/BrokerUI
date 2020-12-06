@@ -1,1 +1,12 @@
-<mat-slide-toggle labelPosition="after" [checked]="state?.value | async" (change)="OnChanged($event)" >{{state?.name}}</mat-slide-toggle>
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="8px">
+    <span>
+        <mat-slide-toggle labelPosition="after" [checked]="state?.onSwitch | async" (change)="OnChanged($event)">
+            {{state?.Name}}
+        </mat-slide-toggle>
+    </span>
+    <span>
+        <button mat-icon-button (click)="ShowDialog()">
+            <mat-icon>settings_brightness</mat-icon>
+        </button>
+    </span>
+</div>

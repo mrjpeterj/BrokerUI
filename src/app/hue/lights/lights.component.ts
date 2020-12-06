@@ -31,11 +31,7 @@ export class LightsComponent implements OnInit {
                     const role = device.GetRole(roleName);
 
                     for (const channel of role.items) {
-                        const lightName = channel.name;
-                        const lightState = channel.GetState(channel.id + '.on');
-                        if (lightState != null) {
-                            this.lights.push(new LightState(lightName, lightState.id, lightState.ListenForBool(), this.broker));
-                        }
+                        this.lights.push(new LightState(channel, this.broker));
                     }
                 }
             }
