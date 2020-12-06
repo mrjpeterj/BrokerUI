@@ -8,12 +8,8 @@
 // which is just an installer, not a library.
 // The definitions may change with updates to ioBroker.js-controller
 
-/// <reference types="node" />
+declare namespace ioBroker {
 
-import * as fs from 'fs';
-import * as os from "os";
-
-declare module ioBroker {
     /** Defines access rights for a single file */
     interface FileACL {
         /** Full name of the user who owns this file, e.g. "system.user.admin" */
@@ -67,45 +63,40 @@ declare module ioBroker {
 
     namespace ObjectIDs {
         // Guaranteed meta objects
-        type Meta =
-            | `${string}.${number}`
-                | `${string}.${"meta" | "admin"}`
-                | `${string}.meta.${string}`
-                | `${string}.${number}.meta.${string}`;
+        type Meta = '${string}.${number}'
+                | '${string}.${"meta" | "admin"}'
+                | '${string}.meta.${string}'
+                | '${string}.${number}.meta.${string}';
 
         // Unsure, can be folder, device, channel or state
         // --> We need this match to avoid matching the more specific types below
-        type Misc =
-            | `system.host.${string}.${string}`
-                | `0_userdata.0.${string}`;
+        type Misc = 'system.host.s.s'
+                | '0_userdata.0.';
 
         // Guaranteed channel objects
-        type Channel =
-            | `script.js.${"common" | "global"}`
-                | `${string}.${number}.info`;
+        type Channel = 'script.js.common' | 'script.js.global'
+                | '${string}.${number}.info';
         // Either script or channel object
-        type ScriptOrChannel = `script.js.${string}`;
+        type ScriptOrChannel = 'script.js.';
         // Guaranteed state objects
-        type State =
-            | `system.adapter.${string}.${number}.${string}`;
+        type State = 'system.adapter.s.n.s';
         // Guaranteed enum objects
-        type Enum = `enum.${string}`;
+        type Enum = 'enum.';
         // Guaranteed instance objects
-        type Instance = `system.adapter.${string}.${number}`;
+        type Instance = 'system.adapter.s.n';
         // Guaranteed adapter objects
-        type Adapter = `system.adapter.${string}`;
+        type Adapter = 'system.adapter.';
         // Guaranteed group objects
-        type Group = `system.group.${string}`;
+        type Group = 'system.group.';
         // Guaranteed user objects
-        type User = `system.user.${string}`;
+        type User = 'system.user.';
         // Guaranteed host objects
-        type Host = `system.host.${string}`;
+        type Host = 'system.host.';
         // Guaranteed config objects
-        type Config = `system.${"certificates" | "config" | "repositories"}`;
+        type Config = 'system.certificates' | 'system.config' | 'system.repositories';
 
         // Unsure, can be folder, device, channel or state (or whatever an adapter does)
-        type AdapterScoped =
-            | `${string}.${number}.${string}`;
+        type AdapterScoped = '${string}.${number}.${string}';
 
         /** All possible typed object IDs */
         type Any =
@@ -297,22 +288,13 @@ declare module ioBroker {
     interface HostNative {
         process: {
             title: string;
-            versions: NodeJS.ProcessVersions;
+            versions: number;
             env: Record<string, string>;
         };
         os: {
             hostname: string,
-            type: ReturnType<typeof os["type"]>;
-            platform: ReturnType<typeof os["platform"]>;
-            arch: ReturnType<typeof os["arch"]>;
-            release: ReturnType<typeof os["release"]>;
-            endianness: ReturnType<typeof os["endianness"]>;
-            tmpdir: ReturnType<typeof os["tmpdir"]>;
         };
         hardware: {
-            cpus: ReturnType<typeof os["cpus"]>;
-            totalmem: ReturnType<typeof os["totalmem"]>;
-            networkInterfaces: ReturnType<typeof os["networkInterfaces"]>;
         };
     }
 
@@ -709,7 +691,7 @@ declare module ioBroker {
         sensor_reports_error = 0x84,
     }
 
-    interface State {
+    export interface State {
         /** The value of the state. */
         val: string | number | boolean | any[] | Record<string, any> | null;
 
@@ -870,11 +852,11 @@ declare module ioBroker {
 
     interface Certificates {
         /** private key file */
-        key: string | Buffer;
+        key: string;
         /** public certificate */
-        cert: string | Buffer;
+        cert: string;
         /** chained CA certificates */
-        ca: Array<string | Buffer>;
+        ca: Array<string>;
     }
 
     type MessagePayload = string | Record<string, any>;
@@ -915,7 +897,7 @@ declare module ioBroker {
 
     interface DirectoryEntry {
         file: string;
-        stats: fs.Stats;
+        stats: any;
         isDir: boolean;
         acl: any; // access control list object
         modifiedAt: number;
@@ -1643,8 +1625,8 @@ declare module ioBroker {
          * @param options (optional) Some internal options.
          * @param callback Is called when the operation has finished (successfully or not)
          */
-        setBinaryState(id: string, binary: Buffer, callback: SetStateCallback): void;
-        setBinaryState(id: string, binary: Buffer, options: unknown, callback: SetStateCallback): void;
+        setBinaryState(id: string, binary: any, callback: SetStateCallback): void;
+        setBinaryState(id: string, binary: any, options: unknown, callback: SetStateCallback): void;
         /**
          * Writes a binary state into Redis
          * @param id The id of the state
@@ -1653,7 +1635,7 @@ declare module ioBroker {
          */
         setBinaryStateAsync(
             id: string,
-            binary: Buffer,
+            binary: any,
             options?: unknown,
         ): SetStatePromise;
         /**
@@ -2127,19 +2109,19 @@ declare module ioBroker {
             options?: unknown,
         ): ReadFilePromise;
 
-        writeFile(adapterName: string | null, path: string, data: Buffer | string, callback: ErrnoCallback): void;
+        writeFile(adapterName: string | null, path: string, data: any | string, callback: ErrnoCallback): void;
         // options see https://github.com/ioBroker/ioBroker.js-controller/blob/master/lib/objects/objectsInMemServer.js#L599
         writeFile(
             adapterName: string | null,
             path: string,
-            data: Buffer | string,
+            data: string,
             options: unknown,
             callback: ErrnoCallback,
         ): void;
         writeFileAsync(
             adapterName: string | null,
             path: string,
-            data: Buffer | string,
+            data: string,
             options?: unknown,
         ): Promise<void>;
 
@@ -2269,7 +2251,7 @@ declare module ioBroker {
     type EmptyCallback = () => void;
     type ErrorCallback = (err?: Error | null) => void;
     /** Special variant of ErrorCallback for methods where Node.js returns an ErrnoException */
-    type ErrnoCallback = (err?: NodeJS.ErrnoException | null) => void;
+    type ErrnoCallback = (err?: string | null) => void;
     // TODO: Redefine callbacks as subclass of GenericCallback
     type GenericCallback<T> = (err?: Error | null, result?: T) => void;
 
@@ -2329,7 +2311,7 @@ declare module ioBroker {
     type GetStatesCallback = (err: Error | null, states?: Record<string, State>) => void;
     type GetStatesPromise = Promise<CallbackReturnTypeOf<GetStatesCallback>>;
 
-    type GetBinaryStateCallback = (err?: Error | null, state?: Buffer) => void;
+    type GetBinaryStateCallback = (err?: Error | null, state?: any) => void;
     type GetBinaryStatePromise = Promise<CallbackReturnTypeOf<GetBinaryStateCallback>>;
 
     type SetStateCallback = (err?: Error | null, id?: string) => void;
@@ -2353,7 +2335,7 @@ declare module ioBroker {
         /** Name of the file or directory */
         file: string;
         /** File system stats */
-        stats: fs.Stats;
+        stats: any;
         /** Whether this is a directory or a file */
         isDir: boolean;
         /** Access rights */
@@ -2363,11 +2345,11 @@ declare module ioBroker {
         /** Date of creation */
         createdAt?: number;
     }
-    type ReadDirCallback = (err?: NodeJS.ErrnoException | null, entries?: ReadDirResult[]) => void;
+    type ReadDirCallback = (err?: string | null, entries?: ReadDirResult[]) => void;
     type ReadDirPromise = Promise<NonNullCallbackReturnTypeOf<ReadDirCallback>>;
 
-    type ReadFileCallback = (err?: NodeJS.ErrnoException | null, file?: Buffer | string, mimeType?: string) => void;
-    type ReadFilePromise = Promise<{ file: string | Buffer; mimeType: string }>;
+    type ReadFileCallback = (err?: string | null, file?: string, mimeType?: string) => void;
+    type ReadFilePromise = Promise<{ file: string ; mimeType: string }>;
 
     /** Contains the return values of chownFile */
     interface ChownFileResult {
@@ -2376,7 +2358,7 @@ declare module ioBroker {
         /** Name of the file or directory */
         file: string;
         /** File system stats */
-        stats: fs.Stats;
+        stats: any;
         /** Whether this is a directory or a file */
         isDir: boolean;
         /** Access rights */
@@ -2386,7 +2368,7 @@ declare module ioBroker {
         /** Date of creation */
         createdAt: number;
     }
-    type ChownFileCallback = (err?: NodeJS.ErrnoException | null, entries?: ChownFileResult[], id?: string) => void;
+    type ChownFileCallback = (err?: string | null, entries?: ChownFileResult[], id?: string) => void;
 
     /** Contains the return values of rm */
     interface RmResult {
@@ -2397,9 +2379,9 @@ declare module ioBroker {
         /** Whether the deleted object was a directory or a file */
         isDir: boolean;
     }
-    type RmCallback = (err?: NodeJS.ErrnoException | null, entries?: RmResult[]) => void;
+    type RmCallback = (err?: string | null, entries?: RmResult[]) => void;
 
-    type ChownObjectCallback = (err?: NodeJS.ErrnoException | null, list?: ioBroker.Object[]) => void;
+    type ChownObjectCallback = (err?: string | null, list?: ioBroker.Object[]) => void;
 
     type GetConfigKeysCallback = (err?: Error | null, list?: string[]) => void;
 
@@ -2432,3 +2414,5 @@ declare module ioBroker {
     type Timeout = number & { __ioBrokerBrand: "Timeout" };
     type Interval = number & { __ioBrokerBrand: "Interval" };
 } // end namespace ioBroker
+
+export = ioBroker;
