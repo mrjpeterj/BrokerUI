@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { IobrokerService } from '../iobroker.service';
+import { BrokerBoolState } from '../broker/boolstate';
 
 class MachineState {
     public name: string;
@@ -48,7 +49,8 @@ export class ListComponent implements OnInit {
                     const states = channel.GetStates();
 
                     for (const state of states) {
-                        const listener = state.ListenForBool();
+                        const boolState = state as BrokerBoolState;
+                        const listener = boolState.ListenForValue();
                         const stateHolder = new MachineState(state.name.substring(6), listener);
 
                         this.listeners.push(stateHolder);

@@ -32,7 +32,7 @@ export class RoomComponent implements OnInit {
     }
 
     public SelectScene(scene: BrokerState) {
-        this.broker.SetState(scene.id, true);
+        this.broker.SetState(scene, true);
 
         this.dialog.close();
     }
