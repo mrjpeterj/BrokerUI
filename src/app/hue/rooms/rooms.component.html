@@ -1,6 +1,8 @@
-<div *ngFor="let val of rooms">
-    <a (click)="OnRoomClicked(val)">
+<div *ngFor="let val of rooms" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="8px">
+    <span>
         {{ val.Name }}
+    </span>
+    <button mat-icon-button (click)="OnRoomClicked(val)">
         <mat-icon>launch</mat-icon>
-    </a>
+    </button>
 </div>
