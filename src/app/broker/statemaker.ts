@@ -3,6 +3,7 @@ import * as ioBroker from 'types/iobroker';
 import { BrokerState } from './state';
 import { BrokerBoolState } from './boolstate';
 import { BrokerIntState } from './numberstate';
+import { BrokerStringState } from './stringstate';
 import { BrokerHelpers } from './helpers';
 
 export class BrokerStateMaker {
@@ -14,6 +15,8 @@ export class BrokerStateMaker {
             return new BrokerBoolState(name, id, stateDesc.read, stateDesc.write);
         } else if (stateDesc.type === 'number') {
             return new BrokerIntState(name, id, stateDesc.min, stateDesc.max, stateDesc.read, stateDesc.write);
+        } else if (stateDesc.type === 'string') {
+            return new BrokerStringState(name, id, stateDesc.read, stateDesc.write);
         }
 
         return null;
