@@ -1,5 +1,5 @@
 <div fxLayout="column" fxLayoutAlign="start center">
     <app-amp-mute [mute]="muted | async" (changed)="SetMuted($event)"></app-amp-mute>
 
-    <app-slider [vertical]="true" [disabled]="muted | async" [state]="volume"></app-slider>
+    <app-slider [vertical]="true" [disabled]="muted | async" [max]="maxVol | async" [state]="volume"></app-slider>
 </div>
