@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { BrokerBoolState } from '../broker/boolstate';
 import { BrokerIntState } from '../broker/numberstate';
+import { BrokerStringState } from '../broker/stringstate';
 import { IobrokerService } from '../iobroker.service';
 
 @Component({
@@ -34,7 +34,6 @@ export class AmpComponent implements OnInit {
     ngOnInit(): void {
         this.broker.GetDeviceFor('denon.0').subscribe({
             next: (device) => {
-                const displayChannel = device.GetChannelFor(device.id + '.display');
                 const infoChannel = device.GetChannelFor(device.id + '.info');
                 const zoneChannel = device.GetChannelFor(device.id + '.zoneMain');
 
@@ -44,8 +43,6 @@ export class AmpComponent implements OnInit {
                 const maxLevelState = zoneChannel?.GetState(zoneChannel.id + '.maximumVolume') as BrokerIntState;
 
                 this.muteState = zoneChannel?.GetState(zoneChannel.id + '.muteIndicator') as BrokerBoolState;
-
-                const inputState = zoneChannel?.GetState(zoneChannel.id + '.selectInput');
 
                 if (this.muteState) {
                     this.muted = this.muteState.ListenForValue();

@@ -21,6 +21,7 @@ import { LightsettingsComponent } from './hue/lightsettings/lightsettings.compon
 import { SliderComponent } from './common/slider/slider.component';
 import { AmpComponent } from './amp/amp.component';
 import { MuteComponent } from './amp/mute/mute.component';
+import { ExtraInfoComponent } from './amp/extra-info/extra-info.component';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { MuteComponent } from './amp/mute/mute.component';
         LightsettingsComponent,
         SliderComponent,
         AmpComponent,
-        MuteComponent
+        MuteComponent,
+        ExtraInfoComponent
     ],
     imports: [
         AppRoutingModule,

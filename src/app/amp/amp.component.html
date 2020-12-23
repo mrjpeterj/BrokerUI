@@ -2,4 +2,6 @@
     <app-amp-mute [mute]="muted | async" (changed)="SetMuted($event)"></app-amp-mute>
 
     <app-slider [vertical]="true" [disabled]="muted | async" [max]="maxVol | async" [state]="volume"></app-slider>
+
+    <app-amp-extra-info></app-amp-extra-info>
 </div>
