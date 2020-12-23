@@ -19,6 +19,8 @@ import { RoomsComponent } from './hue/rooms/rooms.component';
 import { RoomComponent } from './hue/room/room.component';
 import { LightsettingsComponent } from './hue/lightsettings/lightsettings.component';
 import { SliderComponent } from './common/slider/slider.component';
+import { AmpComponent } from './amp/amp.component';
+import { MuteComponent } from './amp/mute/mute.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +31,9 @@ import { SliderComponent } from './common/slider/slider.component';
         RoomsComponent,
         RoomComponent,
         LightsettingsComponent,
-        SliderComponent
+        SliderComponent,
+        AmpComponent,
+        MuteComponent
     ],
     imports: [
         AppRoutingModule,
