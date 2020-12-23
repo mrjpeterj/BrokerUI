@@ -13,6 +13,12 @@ import { Subscription } from 'rxjs';
 export class SliderComponent implements OnInit, OnDestroy {
 
     @Input()
+    public vertical: boolean;
+
+    @Input()
+    public disabled: boolean;
+
+    @Input()
     public min: number;
 
     @Input()
@@ -51,6 +57,9 @@ export class SliderComponent implements OnInit, OnDestroy {
         this.min = 0;
         this.max = 100;
         this.value = 0;
+
+        this.vertical = false;
+        this.disabled = false;
     }
 
     ngOnInit(): void {
