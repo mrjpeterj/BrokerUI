@@ -15,6 +15,7 @@ export class ExtraInfoComponent implements OnInit {
     private broker: IobrokerService;
 
     public inputName: Observable<string> | null;
+    public surroundName: Observable<string> | null;
 
     public extraLines: Observable<string>[];
 
@@ -22,6 +23,7 @@ export class ExtraInfoComponent implements OnInit {
         this.broker = broker;
 
         this.inputName = null;
+        this.surroundName = null;
         this.extraLines = [];
     }
 
@@ -29,6 +31,14 @@ export class ExtraInfoComponent implements OnInit {
         this.broker.GetDeviceFor('denon.0').subscribe({
             next: (device) => {
                 const zoneChannel = device.GetChannelFor(device.id + '.zoneMain');
+                const settingsChannel = device.GetChannelFor(device.id + '.settings');
+
+                if (settingsChannel) {
+                    const surroundState = settingsChannel.GetState(settingsChannel.id + '.surroundMode') as BrokerStringState;
+                    if (surroundState) {
+                        this.surroundName = surroundState.ListenForValue();
+                    }
+                }
 
                 const inputState = zoneChannel?.GetState(zoneChannel.id + '.selectInput') as BrokerStringState;
 

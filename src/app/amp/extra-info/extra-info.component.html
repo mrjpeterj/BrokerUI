@@ -1,4 +1,8 @@
-<div>
-    <button mat-stroked-button>{{ inputName | async }}</button>
-    <div *ngFor="let line of extraLines">{{ line | async }}</div>
+<div class="holder">
+    <div class="info-main">{{ inputName | async }} {{ surroundName | async }}</div>
+    <ng-container *ngFor="let line of extraLines">
+        <div *ngIf="(line | async)?.length > 0">
+            {{ line | async }}
+        </div>
+    </ng-container>
 </div>
