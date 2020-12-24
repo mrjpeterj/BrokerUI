@@ -21,6 +21,9 @@ export class AmpComponent implements OnInit {
     public volume: BrokerIntState | null;
     public maxVol: Observable<number> | null;
 
+    private volumeUp: BrokerBoolState | null;
+    private volumeDown: BrokerBoolState | null;
+
     constructor(broker: IobrokerService) {
         this.broker = broker;
 
@@ -29,6 +32,9 @@ export class AmpComponent implements OnInit {
 
         this.volume = null;
         this.maxVol = null;
+
+        this.volumeUp = null;
+        this.volumeDown = null;
     }
 
     ngOnInit(): void {
@@ -41,6 +47,8 @@ export class AmpComponent implements OnInit {
 
                 this.volume = zoneChannel?.GetState(zoneChannel.id + '.volume') as BrokerIntState;
                 const maxLevelState = zoneChannel?.GetState(zoneChannel.id + '.maximumVolume') as BrokerIntState;
+                this.volumeUp = zoneChannel?.GetState(zoneChannel.id + '.volumeUp') as BrokerBoolState;
+                this.volumeDown = zoneChannel?.GetState(zoneChannel.id + '.volumeDown') as BrokerBoolState;
 
                 this.muteState = zoneChannel?.GetState(zoneChannel.id + '.muteIndicator') as BrokerBoolState;
 
@@ -53,6 +61,18 @@ export class AmpComponent implements OnInit {
                 }
             }
         });
+    }
+
+    public VolumeUp() {
+        if (this.volumeUp) {
+            this.broker.SetState(this.volumeUp, true);
+        }
+    }
+
+    public VolumeDown() {
+        if (this.volumeDown) {
+            this.broker.SetState(this.volumeDown, true);
+        }
     }
 
     public SetMuted(val: boolean) {
