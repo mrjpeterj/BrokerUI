@@ -1,12 +1,7 @@
-<div fxLayout="row" fxLayoutGap="16px">
+<div fxLayout="row">
     <div>
         <div *ngFor="let val of listeners" [ngClass]="val.state | async">
             {{val.name}}
-        </div>
-    </div>
-    <div>
-        <div *ngFor="let val of listeners">
-            {{ val.state | async }}
         </div>
     </div>
 </div>
