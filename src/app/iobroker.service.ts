@@ -124,8 +124,6 @@ export class IobrokerService {
     }
 
     public SetState(state: BrokerState, value: unknown) {
-        if (state != null) {
-            this.servConn.setState(state.id, { val: value });
-        }
+        this.servConn.setState(state.id, { val: value });
     }
 }
