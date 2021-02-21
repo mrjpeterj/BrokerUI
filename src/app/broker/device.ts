@@ -3,6 +3,7 @@ import { BrokerChannelList, BrokerChannel } from './channel';
 export class BrokerDevice {
     public name: string;
     public id: string;
+    private native: any;
 
     private states: BrokerChannel;
 
@@ -10,9 +11,10 @@ export class BrokerDevice {
         [key: string]: BrokerChannelList;
     };
 
-    constructor(name: string, id: string) {
+    constructor(name: string, id: string, native: any) {
         this.name = name;
         this.id = id;
+        this.native = native;
 
         this.states = new BrokerChannel(name, id);
         this.roles = {};
@@ -56,5 +58,19 @@ export class BrokerDevice {
 
     public GetRole(roleName: string): BrokerChannelList {
         return this.roles[roleName];
+    }
+
+    public GetDeviceProperty(propName: string): any | null {
+        if (this.native) {
+            const val = this.native[propName];
+            if (val != null) {
+                return val;
+            } else {
+                // make sure that we return null and never undefined.
+                return null;
+            }
+        }
+
+        return null;
     }
 }

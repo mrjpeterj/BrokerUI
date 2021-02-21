@@ -19,8 +19,8 @@ export class BrokerServices {
         this.devListening = {};
     }
 
-    public CreateDevice(name: string, deviceId: string) {
-        const dev = new BrokerDevice(name, deviceId);
+    public CreateDevice(name: string, deviceId: string, native: any) {
+        const dev = new BrokerDevice(name, deviceId, native);
         this.devices.push(dev);
 
         const listener = this.devListening[deviceId];

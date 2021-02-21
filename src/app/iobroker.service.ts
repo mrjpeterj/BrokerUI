@@ -57,7 +57,7 @@ export class IobrokerService {
                         } else if (item.type === 'device') {
                             const devItem = item as ioBroker.DeviceObject;
 
-                            this.services.CreateDevice(BrokerHelpers.GetString(devItem.common.name), item._id);
+                            this.services.CreateDevice(BrokerHelpers.GetString(devItem.common.name), item._id, devItem.native);
                         } else if (item.type === 'state') {
                             const channel = this.services.GetChannelFor(item._id);
                             if (channel != null) {
