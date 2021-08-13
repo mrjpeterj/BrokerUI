@@ -1,14 +1,15 @@
 import * as ioBroker from 'types/iobroker';
 
 export class BrokerHelpers {
-    public static GetString(label: ioBroker.StringOrTranslated): string {
-        let actualName: string;
+    public static GetString(label: ioBroker.StringOrTranslated | null): string {
         if (typeof (label) === 'string') {
-            actualName = label as string;
-        } else {
-            actualName = label.en || '';
+            return label as string;
+        } else if (label != null) {
+            return label.en || '';
         }
-
-        return actualName;
+        else
+        {
+            return "";
+        }
     }
 }
