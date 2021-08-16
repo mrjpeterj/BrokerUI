@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.broker.GetDeviceFor('ping.0.pi1').subscribe({
+        this.broker.GetDeviceFor('ping.0.fire').subscribe({
             next: (device) => {
                 const channel = device.GetChannelFor(device.id);
                 if (channel != null) {
