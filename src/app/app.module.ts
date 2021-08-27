@@ -22,6 +22,7 @@ import { SliderComponent } from './common/slider/slider.component';
 import { AmpComponent } from './amp/amp.component';
 import { MuteComponent } from './amp/mute/mute.component';
 import { ExtraInfoComponent } from './amp/extra-info/extra-info.component';
+import { AirComponent } from './air/air.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { ExtraInfoComponent } from './amp/extra-info/extra-info.component';
         SliderComponent,
         AmpComponent,
         MuteComponent,
-        ExtraInfoComponent
+        ExtraInfoComponent,
+        AirComponent
     ],
     imports: [
         AppRoutingModule,
