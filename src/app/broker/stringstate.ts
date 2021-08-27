@@ -17,7 +17,11 @@ export class BrokerStringState extends BrokerState {
         return this.value.pipe(
             distinctUntilChanged(),
             map((val) => {
-                return (val as object).toString();
+                if (val == null) {
+                    return '';
+                } else {
+                    return (val as object).toString();
+                }
             })
         );
     }
