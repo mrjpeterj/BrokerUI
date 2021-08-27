@@ -1,5 +1,5 @@
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { delay, distinctUntilChanged, map } from 'rxjs/operators';
 
 import * as ioBroker from 'types/iobroker';
 
@@ -8,20 +8,23 @@ import { BrokerDevice } from './device';
 import { BrokerState } from './state';
 
 export class BrokerServices {
-    private devices: BrokerDevice[];
+    private deviceArray: BrokerDevice[];
+    private devicesSubject: BehaviorSubject<BrokerDevice[]>;
 
     private devListening: {
         [key: string]: Subject<BrokerDevice>;
     };
 
     constructor() {
-        this.devices = [];
+        this.deviceArray = [];
+        this.devicesSubject = new BehaviorSubject<BrokerDevice[]>([]);
         this.devListening = {};
     }
 
     public CreateDevice(name: string, deviceId: string, native: any) {
         const dev = new BrokerDevice(name, deviceId, native);
-        this.devices.push(dev);
+        this.deviceArray.push(dev);
+        this.devicesSubject.next(this.deviceArray);
 
         const listener = this.devListening[deviceId];
         if (listener != null) {
@@ -48,7 +51,7 @@ export class BrokerServices {
     }
 
     public GetDeviceFor(id: string): BrokerDevice | null {
-        for (const dev of this.devices) {
+        for (const dev of this.deviceArray) {
             if (id === dev.id) {
                 return dev;
             } else if (id.startsWith(dev.id)) {
@@ -61,6 +64,28 @@ export class BrokerServices {
         }
 
         return null;
+    }
+
+    private static CompareDeviceList(a: BrokerDevice[], b:BrokerDevice[]): boolean {
+        if (a.length != b.length) {
+            return false;
+        }
+
+        for (var i = 0; i < a.length; ++i) {
+            if (a[i] !== b[i])  {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public GetDevicesMatching(id: RegExp | string) : Observable<BrokerDevice[]> {
+        return this.devicesSubject.pipe(
+            map((devices) => devices.filter((device) => device.id.match(id))),
+            distinctUntilChanged(BrokerServices.CompareDeviceList),
+            delay(1)
+        )
     }
 
     public GetChannelFor(id: string): BrokerChannel | null {

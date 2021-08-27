@@ -119,6 +119,10 @@ export class IobrokerService {
         return this.services.ListenForDevice(id);
     }
 
+    public GetDevicesMatching(id: RegExp | string) : Observable<BrokerDevice[]> {
+        return this.services.GetDevicesMatching(id);
+    }
+
     public GetState(stateId: string): BrokerState | null {
         return this.services.GetState(stateId);
     }
