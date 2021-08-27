@@ -25,4 +25,8 @@ export class BrokerState {
     public Update(state: ioBroker.State) {
         this.value.next(state.val);
     }
+
+    public BuildValue(value: unknown) {
+        return { val: value };
+    }
 }
