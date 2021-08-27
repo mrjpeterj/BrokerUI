@@ -27,7 +27,7 @@ export class BrokerNumberState extends BrokerState {
                 if (typeof (val) === 'number') {
                     return val;
                 } else if (typeof (val) === 'string') {
-                    return Number.parseInt(val as string, 10);
+                    return Number.parseFloat(val as string);
                 } else {
                     return 0;
                 }
