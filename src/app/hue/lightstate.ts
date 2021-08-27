@@ -3,13 +3,13 @@ import { Observable } from 'rxjs';
 import { IobrokerService } from '../iobroker.service';
 import { BrokerChannel } from '../broker/channel';
 import { BrokerBoolState } from '../broker/boolstate';
-import { BrokerIntState } from '../broker/numberstate';
+import { BrokerNumberState } from '../broker/numberstate';
 
 export class LightState {
     private channel: BrokerChannel;
 
     private onState: BrokerBoolState;
-    private briState: BrokerIntState;
+    private briState: BrokerNumberState;
 
     private broker: IobrokerService;
 
@@ -21,7 +21,7 @@ export class LightState {
         this.broker = broker;
 
         this.onState = channel.GetState(channel.id + '.on') as BrokerBoolState;
-        this.briState = channel.GetState(channel.id + '.bri') as BrokerIntState;
+        this.briState = channel.GetState(channel.id + '.bri') as BrokerNumberState;
 
         this.onSwitch = this.onState.ListenForValue();
         this.brightness = this.briState.ListenForValue();
@@ -31,7 +31,7 @@ export class LightState {
         return this.channel.name;
     }
 
-    public GetBrightnessState(): BrokerIntState {
+    public GetBrightnessState(): BrokerNumberState {
         return this.briState;
     }
 

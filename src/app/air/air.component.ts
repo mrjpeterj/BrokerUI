@@ -2,7 +2,7 @@ import { temporaryAllocator } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
 
 import { BrokerDevice } from '../broker/device';
-import { BrokerIntState } from '../broker/numberstate';
+import { BrokerNumberState } from '../broker/numberstate';
 import { BrokerStringState } from '../broker/stringstate';
 
 import { IobrokerService } from '../iobroker.service';
@@ -28,7 +28,7 @@ class AirInfo {
 
         const sensors = device.GetChannelFor(devId + '.Sensor');
         if (sensors != null) {
-            const temp = sensors.GetState(sensors.id + '.Temperature') as (BrokerIntState | null);
+            const temp = sensors.GetState(sensors.id + '.Temperature') as (BrokerNumberState | null);
             if (temp != null) {
                 temp.ListenForValue().subscribe({
                     next: (val) => {
@@ -37,7 +37,7 @@ class AirInfo {
                 });
             }
 
-            const humidity = sensors.GetState(sensors.id + '.Humidity') as (BrokerIntState | null);
+            const humidity = sensors.GetState(sensors.id + '.Humidity') as (BrokerNumberState | null);
             if (humidity != null) {
                 humidity.ListenForValue().subscribe({
                     next: (val) => {

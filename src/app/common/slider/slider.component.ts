@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 
-import { BrokerIntState } from '../../broker/numberstate';
+import { BrokerNumberState } from '../../broker/numberstate';
 import { IobrokerService } from 'src/app/iobroker.service';
 import { Subscription } from 'rxjs';
 
@@ -24,12 +24,12 @@ export class SliderComponent implements OnInit, OnDestroy {
     @Input()
     public max: number;
 
-    public get state(): BrokerIntState | null {
+    public get state(): BrokerNumberState | null {
         return this.stateHolder;
     }
 
     @Input()
-    public set state(val: BrokerIntState | null) {
+    public set state(val: BrokerNumberState | null) {
         this.stateHolder = val;
 
         if (val != null) {
@@ -45,7 +45,7 @@ export class SliderComponent implements OnInit, OnDestroy {
 
     private broker: IobrokerService;
 
-    private stateHolder: BrokerIntState | null;
+    private stateHolder: BrokerNumberState | null;
     private stateListener: Subscription | null;
 
     constructor(broker: IobrokerService) {

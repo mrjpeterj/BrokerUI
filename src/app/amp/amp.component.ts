@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { BrokerBoolState } from '../broker/boolstate';
-import { BrokerIntState } from '../broker/numberstate';
-import { BrokerStringState } from '../broker/stringstate';
+import { BrokerNumberState } from '../broker/numberstate';
 import { IobrokerService } from '../iobroker.service';
 
 @Component({
@@ -18,7 +17,7 @@ export class AmpComponent implements OnInit {
     private muteState: BrokerBoolState | null;
     public muted: Observable<boolean> | null;
 
-    public volume: BrokerIntState | null;
+    public volume: BrokerNumberState | null;
     public maxVol: Observable<number> | null;
 
     private volumeUp: BrokerBoolState | null;
@@ -45,8 +44,8 @@ export class AmpComponent implements OnInit {
 
                 const nameState = infoChannel?.GetState(infoChannel.id + '.friendlyName');
 
-                this.volume = zoneChannel?.GetState(zoneChannel.id + '.volume') as BrokerIntState;
-                const maxLevelState = zoneChannel?.GetState(zoneChannel.id + '.maximumVolume') as BrokerIntState;
+                this.volume = zoneChannel?.GetState(zoneChannel.id + '.volume') as BrokerNumberState;
+                const maxLevelState = zoneChannel?.GetState(zoneChannel.id + '.maximumVolume') as BrokerNumberState;
                 this.volumeUp = zoneChannel?.GetState(zoneChannel.id + '.volumeUp') as BrokerBoolState;
                 this.volumeDown = zoneChannel?.GetState(zoneChannel.id + '.volumeDown') as BrokerBoolState;
 

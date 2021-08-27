@@ -3,7 +3,7 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 
 import { BrokerState } from './state';
 
-export class BrokerIntState extends BrokerState {
+export class BrokerNumberState extends BrokerState {
 
     public minVal: number | undefined;
     public maxVal: number | undefined;
