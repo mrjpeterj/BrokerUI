@@ -20,3 +20,11 @@ $theme: mat.define-light-theme((
 
 // Include all theme styles for the components.
 @include mat.all-component-themes($theme);
+
+body {
+    margin: 4px;
+}
+
+.mat-card {
+    padding: 8px !important;
+}
