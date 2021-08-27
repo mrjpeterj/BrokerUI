@@ -1,13 +1,21 @@
 <div>
     <div *ngFor="let unit of airUnits">
         <mat-slide-toggle labelPosition="before" [checked]="unit.power | async" (change)="unit.OnChanged($event)">
-            {{unit.name}}
+            <div [attr.title]="unit.desc">{{unit.name}}</div>
         </mat-slide-toggle>
-        <div>
-            Temperature = {{unit.temp}}
-        </div>
-        <div>
-            Humidity = {{unit.humidity}}
+        <div class="indent">
+            <div fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="8px">
+                <div>Temperature</div>
+                <div>{{unit.temp}}&#8451;</div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between">
+                <div>Humidity</div>
+                <div>{{unit.humidity}}%</div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between">
+                <div>Air Quality</div>
+                <div>{{unit.quality}}</div>
+            </div>
         </div>
     </div>
 </div>

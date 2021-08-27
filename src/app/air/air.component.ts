@@ -4,21 +4,25 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 import { Observable } from 'rxjs';
 
+import { IobrokerService } from '../iobroker.service';
+
+import { BrokerChannel } from '../broker/channel';
 import { BrokerDevice } from '../broker/device';
 import { BrokerBoolState } from '../broker/boolstate';
+import { BrokerEnumState } from '../broker/enumstate';
 import { BrokerNumberState } from '../broker/numberstate';
 import { BrokerStringState } from '../broker/stringstate';
-
-import { IobrokerService } from '../iobroker.service';
-import { BrokerChannel } from '../broker/channel';
 
 class AirInfo {
     private broker: IobrokerService;
 
+    public desc: string;
     public name: string;
 
     public temp: number;
     public humidity: number;
+
+    public quality: string;
 
     private powerState: BrokerBoolState;
     public power: Observable<boolean>;
@@ -29,9 +33,10 @@ class AirInfo {
         this.name = '';
         this.temp = 0;
         this.humidity = 0;
+        this.quality = '';
 
         const devId = device.id;
-        const title = device.name;
+        this.desc = device.name;
 
         const sensors = device.GetChannelFor(devId + '.Sensor');
         if (sensors != null) {
@@ -59,6 +64,13 @@ class AirInfo {
                 this.name = val;
             }
         });
+
+        const quality = devChannel.GetState(devId + '.AirQuality') as BrokerEnumState;
+        quality.ListenForValue().subscribe({
+            next: (val) => {
+                this.quality = val;
+            }
+        })
     }
 
     public OnChanged(state: MatSlideToggleChange) {
