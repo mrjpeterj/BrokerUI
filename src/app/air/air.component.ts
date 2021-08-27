@@ -1,19 +1,31 @@
-import { temporaryAllocator } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
 
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+
+import { Observable } from 'rxjs';
+
 import { BrokerDevice } from '../broker/device';
+import { BrokerBoolState } from '../broker/boolstate';
 import { BrokerNumberState } from '../broker/numberstate';
 import { BrokerStringState } from '../broker/stringstate';
 
 import { IobrokerService } from '../iobroker.service';
+import { BrokerChannel } from '../broker/channel';
 
 class AirInfo {
+    private broker: IobrokerService;
+
     public name: string;
 
     public temp: number;
     public humidity: number;
 
-    constructor(device: BrokerDevice) {
+    private powerState: BrokerBoolState;
+    public power: Observable<boolean>;
+
+    constructor(device: BrokerDevice, devChannel: BrokerChannel, broker: IobrokerService) {
+        this.broker = broker;
+
         this.name = '';
         this.temp = 0;
         this.humidity = 0;
@@ -21,39 +33,36 @@ class AirInfo {
         const devId = device.id;
         const title = device.name;
 
-        const devChannel = device.GetChannelFor(devId);
-        if (devChannel == null) {
-            return;
-        }
-
         const sensors = device.GetChannelFor(devId + '.Sensor');
         if (sensors != null) {
-            const temp = sensors.GetState(sensors.id + '.Temperature') as (BrokerNumberState | null);
-            if (temp != null) {
-                temp.ListenForValue().subscribe({
-                    next: (val) => {
-                        this.temp = val;
-                    }
-                });
-            }
+            const temp = sensors.GetState(sensors.id + '.Temperature') as BrokerNumberState;
+            temp.ListenForValue().subscribe({
+                next: (val) => {
+                    this.temp = val;
+                }
+            });
 
-            const humidity = sensors.GetState(sensors.id + '.Humidity') as (BrokerNumberState | null);
-            if (humidity != null) {
-                humidity.ListenForValue().subscribe({
-                    next: (val) => {
-                        this.humidity = val;
-                    }
-                })
-            }
+            const humidity = sensors.GetState(sensors.id + '.Humidity') as BrokerNumberState;
+            humidity.ListenForValue().subscribe({
+                next: (val) => {
+                    this.humidity = val;
+                }
+            });
         }
 
+        this.powerState = devChannel.GetState(devId + '.MainPower') as BrokerBoolState;
+        this.power = this.powerState.ListenForValue();
 
-        const name = devChannel.GetState(devId + '.Name') as (BrokerStringState | null);
-        name?.ListenForValue().subscribe({
+        const name = devChannel.GetState(devId + '.Name') as BrokerStringState;
+        name.ListenForValue().subscribe({
             next: (val) => {
-                this.name = title + ' - ' + val;
+                this.name = val;
             }
         });
+    }
+
+    public OnChanged(state: MatSlideToggleChange) {
+        this.broker.SetState(this.powerState, state.checked);
     }
 }
 
@@ -87,7 +96,11 @@ export class AirComponent implements OnInit {
         this.airUnits.splice(0, this.airUnits.length);
 
         for (const device of devices) {
-           this.airUnits.push(new AirInfo(device));
+            const devChannel = device.GetChannelFor(device.id);
+
+            if (devChannel != null) {
+                this.airUnits.push(new AirInfo(device, devChannel, this.broker));
+            }
         }
     }
 }

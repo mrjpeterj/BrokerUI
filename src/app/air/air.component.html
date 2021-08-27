@@ -1,8 +1,8 @@
 <div>
     <div *ngFor="let unit of airUnits">
-        <div>
+        <mat-slide-toggle labelPosition="before" [checked]="unit.power | async" (change)="unit.OnChanged($event)">
             {{unit.name}}
-        </div>
+        </mat-slide-toggle>
         <div>
             Temperature = {{unit.temp}}
         </div>
