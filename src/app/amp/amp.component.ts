@@ -39,10 +39,10 @@ export class AmpComponent implements OnInit {
     ngOnInit(): void {
         this.broker.GetDeviceFor('denon.0').subscribe({
             next: (device) => {
-                const infoChannel = device.GetChannelFor(device.id + '.info');
+                // const infoChannel = device.GetChannelFor(device.id + '.info');
                 const zoneChannel = device.GetChannelFor(device.id + '.zoneMain');
 
-                const nameState = infoChannel?.GetState(infoChannel.id + '.friendlyName');
+                // const nameState = infoChannel?.GetState(infoChannel.id + '.friendlyName');
 
                 this.volume = zoneChannel?.GetState(zoneChannel.id + '.volume') as BrokerNumberState;
                 const maxLevelState = zoneChannel?.GetState(zoneChannel.id + '.maximumVolume') as BrokerNumberState;

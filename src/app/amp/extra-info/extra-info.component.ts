@@ -51,7 +51,6 @@ export class ExtraInfoComponent implements OnInit {
                 this.inputName = inputState.ListenForValue();
 
                 const displayChannel = device.GetChannelFor(device.id + '.display');
-                const stateStrings: Observable<string>[] = [];
 
                 if (displayChannel) {
                     const displayStates = displayChannel.GetStates();
