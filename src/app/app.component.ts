@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { IobrokerService } from './iobroker.service';
-import { BrokerBoolState } from './broker/boolstate';
+import { BrokerBoolState } from '@mrjpeterj/broker-lib';
 
 @Component({
     selector: 'app-root',

@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 
-import { BrokerNumberState } from '../../broker/numberstate';
-import { IobrokerService } from 'src/app/iobroker.service';
 import { Subscription } from 'rxjs';
+
+import { BrokerNumberState } from '@mrjpeterj/broker-lib';
+import { IobrokerService } from '../../iobroker.service';
 
 @Component({
     selector: 'app-slider',

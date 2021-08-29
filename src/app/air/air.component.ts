@@ -6,12 +6,14 @@ import { Observable } from 'rxjs';
 
 import { IobrokerService } from '../iobroker.service';
 
-import { BrokerChannel } from '../broker/channel';
-import { BrokerDevice } from '../broker/device';
-import { BrokerBoolState } from '../broker/boolstate';
-import { BrokerEnumState } from '../broker/enumstate';
-import { BrokerNumberState } from '../broker/numberstate';
-import { BrokerStringState } from '../broker/stringstate';
+import {
+    BrokerChannel,
+    BrokerDevice,
+    BrokerBoolState,
+    BrokerEnumState,
+    BrokerNumberState,
+    BrokerStringState
+} from '@mrjpeterj/broker-lib';
 
 class AirInfo {
     private broker: IobrokerService;

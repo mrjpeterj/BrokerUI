@@ -1,5 +1,4 @@
-import { BrokerChannel } from '../broker/channel';
-import { BrokerState } from '../broker/state';
+import { BrokerChannel, BrokerState } from '@mrjpeterj/broker-lib';
 
 export class RoomState {
 

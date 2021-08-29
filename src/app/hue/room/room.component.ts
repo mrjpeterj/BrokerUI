@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { IobrokerService } from '../../iobroker.service';
 
-import { BrokerState } from '../../broker/state';
+import { BrokerState } from '@mrjpeterj/broker-lib';
 
 import { RoomState } from '../roomstate';
 

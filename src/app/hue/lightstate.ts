@@ -1,9 +1,7 @@
 import { Observable } from 'rxjs';
 
 import { IobrokerService } from '../iobroker.service';
-import { BrokerChannel } from '../broker/channel';
-import { BrokerBoolState } from '../broker/boolstate';
-import { BrokerNumberState } from '../broker/numberstate';
+import { BrokerChannel, BrokerBoolState, BrokerNumberState } from '@mrjpeterj/broker-lib';
 
 export class LightState {
     private channel: BrokerChannel;

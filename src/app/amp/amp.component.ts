@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { BrokerBoolState } from '../broker/boolstate';
-import { BrokerNumberState } from '../broker/numberstate';
+import { BrokerBoolState, BrokerNumberState } from '@mrjpeterj/broker-lib';
+
 import { IobrokerService } from '../iobroker.service';
 
 @Component({

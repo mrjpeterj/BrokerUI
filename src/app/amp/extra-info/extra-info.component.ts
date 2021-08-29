@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { BrokerStringState } from '../../broker/stringstate';
+import { BrokerStringState } from '@mrjpeterj/broker-lib';
+
 import { IobrokerService } from '../../iobroker.service';
 
 @Component({

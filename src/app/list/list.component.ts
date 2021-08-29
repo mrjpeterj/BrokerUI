@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { IobrokerService } from '../iobroker.service';
-import { BrokerBoolState } from '../broker/boolstate';
+import { BrokerBoolState } from '@mrjpeterj/broker-lib';
 
 class MachineState {
     public name: string;
