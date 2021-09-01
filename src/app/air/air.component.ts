@@ -68,7 +68,7 @@ class AirInfo {
         });
 
         const quality = devChannel.GetState(devId + '.AirQuality') as BrokerEnumState;
-        quality.ListenForValue().subscribe({
+        quality.ListenForStringValue().subscribe({
             next: (val) => {
                 this.quality = val;
             }
