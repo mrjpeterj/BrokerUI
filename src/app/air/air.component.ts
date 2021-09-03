@@ -45,7 +45,7 @@ class AirInfo {
             const temp = sensors.GetState(sensors.id + '.Temperature') as BrokerNumberState;
             temp.ListenForValue().subscribe({
                 next: (val) => {
-                    this.temp = (val - 2731) / 10.0;
+                    this.temp = val;
                 }
             });
 
