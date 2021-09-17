@@ -22,7 +22,7 @@
     "@angular/platform-browser": "~12.2.3",
     "@angular/platform-browser-dynamic": "~12.2.3",
     "@angular/router": "~12.2.3",
-    "@mrjpeterj/broker-lib": "^1.0.6",
+    "@mrjpeterj/broker-lib": "^1.0.12",
     "material-community-components": "^10.0.0",
     "rxjs": "~6.6.7",
     "tslib": "^2.0.0",
