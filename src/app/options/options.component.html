@@ -1,0 +1,3 @@
+<div *ngFor="let val of boolOptions">
+    <mat-slide-toggle labelPosition="before" [checked]="val.value | async" (change)="val.UpdateState($event)">{{ val.name }}</mat-slide-toggle>
+</div>

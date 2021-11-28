@@ -23,6 +23,7 @@ import { AmpComponent } from './amp/amp.component';
 import { MuteComponent } from './amp/mute/mute.component';
 import { ExtraInfoComponent } from './amp/extra-info/extra-info.component';
 import { AirComponent } from './air/air.component';
+import { OptionsComponent } from './options/options.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { AirComponent } from './air/air.component';
         AmpComponent,
         MuteComponent,
         ExtraInfoComponent,
-        AirComponent
+        AirComponent,
+        OptionsComponent
     ],
     imports: [
         AppRoutingModule,
