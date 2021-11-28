@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
@@ -48,7 +47,6 @@ import { OptionsComponent } from './options/options.component';
         FlexLayoutModule,
 
         MatButtonModule,
-        MatCardModule,
         MatDialogModule,
         MatIconModule,
         MatSliderModule,

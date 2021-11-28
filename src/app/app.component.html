@@ -1,32 +1,40 @@
 <div fxLayout="row wrap">
-    <mat-card>
-        <mat-card-title>Lights</mat-card-title>
-        <mat-card-content>
+    <div class="card">
+        <h1>Lights</h1>
+        <div>
             <app-hue-lights></app-hue-lights>
-        </mat-card-content>
-    </mat-card>
-    <mat-card>
-        <mat-card-title>Rooms</mat-card-title>
-        <mat-card-content>
+        </div>
+    </div>
+    <div class="card">
+        <h1>Rooms</h1>
+        <div>
             <app-hue-rooms></app-hue-rooms>
-        </mat-card-content>
-    </mat-card>
-    <mat-card *ngIf="hasAmp | async">
-        <mat-card-title>Amp</mat-card-title>
-        <mat-card-content>
-            <app-amp></app-amp>
-        </mat-card-content>
-    </mat-card>
-    <mat-card>
-        <mat-card-title>Machines</mat-card-title>
-        <mat-card-content>
+        </div>
+    </div>
+    <div class="card">
+        <div *ngIf="hasAmp | async">
+            <h1>Amp</h1>
+            <div>
+                <app-amp></app-amp>
+            </div>
+        </div>
+        <div>
+            <h1>Air</h1>
+            <div>
+                <app-air></app-air>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <h1>Machines</h1>
+        <div>
             <app-list></app-list>
-        </mat-card-content>
-    </mat-card>
-    <mat-card>
-        <mat-card-title>Air</mat-card-title>
-        <mat-card-content>
-            <app-air></app-air>
-        </mat-card-content>
-    </mat-card>
+        </div>
+    </div>
+    <div class="card">
+        <h1>Options</h1>
+        <div>
+            <app-options></app-options>
+        </div>
+    </div>
 </div>
