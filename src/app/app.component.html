@@ -6,16 +6,10 @@
         </div>
     </div>
     <div class="card">
-        <h1>Rooms</h1>
         <div>
-            <app-hue-rooms></app-hue-rooms>
-        </div>
-    </div>
-    <div class="card">
-        <div *ngIf="hasAmp | async">
-            <h1>Amp</h1>
+            <h1>Rooms</h1>
             <div>
-                <app-amp></app-amp>
+                <app-hue-rooms></app-hue-rooms>
             </div>
         </div>
         <div>
@@ -32,9 +26,17 @@
         </div>
     </div>
     <div class="card">
-        <h1>Options</h1>
+        <div *ngIf="hasAmp | async">
+            <h1>Amp</h1>
+            <div>
+                <app-amp></app-amp>
+            </div>
+        </div>
         <div>
-            <app-options></app-options>
+            <h1>Options</h1>
+            <div>
+                <app-options></app-options>
+            </div>
         </div>
     </div>
 </div>
