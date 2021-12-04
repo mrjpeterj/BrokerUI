@@ -30,7 +30,9 @@ export class LightsComponent implements OnInit {
                 for (const roleName of lightRoles) {
                     const role = device.GetRole(roleName);
 
-                    for (const channel of role.items) {
+                    const lightList = role.items.sort((a, b) => a.name.localeCompare(b.name) );
+
+                    for (const channel of lightList) {
                         this.lights.push(new LightState(channel, this.broker));
                     }
                 }
