@@ -23,7 +23,6 @@
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
     "@mrjpeterj/broker-lib": "^1.0.14",
-    "material-community-components": "^10.0.0",
     "rxjs": "~7.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"
