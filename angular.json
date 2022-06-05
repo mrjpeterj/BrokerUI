@@ -117,7 +117,6 @@
       }
     }
   },
-  "defaultProject": "hue-ui",
   "cli": {
     "analytics": "24492285-0eaa-4c33-911f-3377de518f37"
   }
