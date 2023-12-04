@@ -19,7 +19,7 @@ export class IobrokerService {
     constructor() {
         this.services = new BrokerService({
                 name: 'ang.0',
-                connLink: 'http://fire:8084/'
+                connLink: 'http://router:8084/'
         });
     }
 
