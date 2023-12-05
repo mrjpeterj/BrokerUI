@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -44,7 +43,6 @@ import { OptionsComponent } from './options/options.component';
         AppRoutingModule,
         BrowserModule,
         BrowserAnimationsModule,
-        FlexLayoutModule,
 
         MatButtonModule,
         MatDialogModule,
