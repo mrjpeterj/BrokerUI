@@ -2,6 +2,12 @@ h1 {
     margin-bottom: 8px;
 }
 
+.app-layout {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 .card {
     padding: 8px !important;
 }

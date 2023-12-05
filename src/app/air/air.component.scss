@@ -1,3 +1,10 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    gap: 8px;
+}
+
 .indent {
     margin-top: 4px;
     margin-left: 8px;

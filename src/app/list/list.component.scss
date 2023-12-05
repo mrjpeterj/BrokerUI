@@ -1,9 +1,14 @@
-.On 
+.list {
+    display: flex;
+    flex-direction: row;
+}
+
+.On
 {
     color: green;
 }
 
-.Off 
+.Off
 {
     color: red;
 }
