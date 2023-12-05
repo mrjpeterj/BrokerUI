@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { MatSliderChange } from '@angular/material/slider';
 
 import { Subscription } from 'rxjs';
 
@@ -72,9 +71,9 @@ export class SliderComponent implements OnInit, OnDestroy {
         }
     }
 
-    public OnChanged(event: MatSliderChange) {
-        if (event.value != null && this.stateHolder != null) {
-            this.broker.SetState(this.stateHolder, event.value);
+    public OnChanged() {
+        if (this.stateHolder != null) {
+            this.broker.SetState(this.stateHolder, this.value);
         }
     }
 }
