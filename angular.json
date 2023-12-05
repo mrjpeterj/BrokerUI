@@ -71,18 +71,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "hue-ui:build"
+            "buildTarget": "hue-ui:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "hue-ui:build:production"
+              "buildTarget": "hue-ui:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "hue-ui:build"
+            "buildTarget": "hue-ui:build"
           }
         },
         "test": {
