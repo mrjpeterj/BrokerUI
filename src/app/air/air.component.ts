@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { IobrokerService } from '../iobroker.service';
 
@@ -80,6 +80,56 @@ class AirInfo {
     }
 }
 
+class TuyaAirInfo {
+    private broker: IobrokerService;
+
+    public desc: string;
+
+    public temp: number;
+    public humidity: number;
+
+    private powerState: BrokerBoolState;
+    public power: Observable<boolean>;
+
+    constructor(device: BrokerDevice, devChannel: BrokerChannel, broker: IobrokerService) {
+        this.broker = broker;
+
+        this.temp = 0;
+        this.humidity = 0;
+
+        this.desc = device.name;
+
+        this.powerState = new BrokerBoolState('fake', '0');
+        this.power = new BehaviorSubject<boolean>(false);
+
+        devChannel.GetStates().forEach(state => {
+            if (state.name == 'switch') {
+                this.powerState = state as BrokerBoolState;
+                this.power = this.powerState.ListenForValue();
+            } else if (state.name == 'temp_indoor') {
+                const temp = state as BrokerNumberState;
+                temp.ListenForValue().subscribe({
+                    next: (val) => {
+                        this.temp = val;
+                    }
+                });
+            } else if (state.name == 'humidity_indoor') {
+                const humidity = state as BrokerNumberState;
+                humidity.ListenForValue().subscribe({
+                    next: (val) => {
+                        this.humidity = val;
+                    }
+                });
+            }
+        });
+    }
+
+    public OnChanged(state: MatSlideToggleChange) {
+        this.broker.SetState(this.powerState, state.checked);
+    }
+}
+
+
 @Component({
     selector: 'app-air',
     templateUrl: './air.component.html',
@@ -90,17 +140,24 @@ export class AirComponent implements OnInit {
     private broker: IobrokerService;
 
     public airUnits: AirInfo[];
+    public airUnits2: TuyaAirInfo[];
 
     constructor(broker: IobrokerService) {
         this.broker = broker;
 
         this.airUnits = [];
+        this.airUnits2 = [];
     }
 
     ngOnInit(): void {
         this.broker.GetDevicesMatching("^dysonairpurifier").subscribe({
             next: (devices) => {
                 this.BuildDeviceList(devices);
+            }
+        });
+        this.broker.GetDevicesMatching("^tuya").subscribe({
+            next: (devices) => {
+                this.BuildTuyaDeviceList(devices);
             }
         });
     }
@@ -114,6 +171,19 @@ export class AirComponent implements OnInit {
 
             if (devChannel != null) {
                 this.airUnits.push(new AirInfo(device, devChannel, this.broker));
+            }
+        }
+    }
+
+    private BuildTuyaDeviceList(devices: BrokerDevice[]): void {
+
+        this.airUnits2.splice(0, this.airUnits2.length);
+
+        for (const device of devices) {
+            const devChannel = device.GetChannelFor(device.id);
+
+            if (devChannel != null && devChannel.GetStates().filter((bs) => bs.name.startsWith("humidity")).length > 0) {
+                this.airUnits2.push(new TuyaAirInfo(device, devChannel, this.broker));
             }
         }
     }
