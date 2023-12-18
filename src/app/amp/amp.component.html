@@ -1,12 +1,8 @@
-<div fxLayout="column" fxLayoutAlign="start center">
-    <div fxLayout="row">
-        <app-slider [vertical]="true" [disabled]="muted | async" [max]="maxVol | async" [state]="volume"></app-slider>
-        <div fxLayout="column" fxLayoutAlign="space-between">
-            <button mat-icon-button (click)="VolumeUp()"><mat-icon>arrow_drop_up</mat-icon></button>
-            <app-amp-mute [mute]="muted | async" (changed)="SetMuted($event)"></app-amp-mute>
-            <button mat-icon-button (click)="VolumeDown()"><mat-icon>arrow_drop_down</mat-icon></button>
-        </div>
-    </div>
-
-    <app-amp-extra-info></app-amp-extra-info>
+<app-slider [disabled]="muted | async" [max]="maxVol | async" [state]="volume"></app-slider>
+<div>
+    <button mat-icon-button (click)="VolumeUp()"><mat-icon>arrow_drop_up</mat-icon></button>
+    <app-amp-mute [mute]="muted | async" (changed)="SetMuted($event)"></app-amp-mute>
+    <button mat-icon-button (click)="VolumeDown()"><mat-icon>arrow_drop_down</mat-icon></button>
 </div>
+
+<app-amp-extra-info></app-amp-extra-info>
