@@ -91,11 +91,19 @@ class TuyaAirInfo {
     private powerState: BrokerBoolState;
     public power: Observable<boolean>;
 
+    public isFull: boolean;
+
+    public isFullClass(): string
+    {
+        return String(this.isFull);
+    }
+
     constructor(device: BrokerDevice, devChannel: BrokerChannel, broker: IobrokerService) {
         this.broker = broker;
 
         this.temp = 0;
         this.humidity = 0;
+        this.isFull = false;
 
         this.desc = device.name;
 
@@ -118,6 +126,13 @@ class TuyaAirInfo {
                 humidity.ListenForValue().subscribe({
                     next: (val) => {
                         this.humidity = val;
+                    }
+                });
+            } else if (state.name.endsWith("FULL")) {
+                const fullState = state as BrokerBoolState;
+                fullState.ListenForValue().subscribe({
+                    next: (val) => {
+                        this.isFull = val;
                     }
                 });
             }

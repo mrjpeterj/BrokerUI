@@ -8,26 +8,29 @@
                 <div>Temperature</div>
                 <div>{{unit.temp}}&#8451;</div>
             </div>
-            <div class="row" >
+            <div class="row">
                 <div>Humidity</div>
                 <div>{{unit.humidity}}%</div>
             </div>
-            <div class="row" >
+            <div class="row">
                 <div>Air Quality</div>
                 <div>{{unit.quality}}</div>
             </div>
         </div>
     </div>
     <div *ngFor="let unit of airUnits2">
-        <mat-slide-toggle labelPosition="before" [checked]="unit.power | async" (change)="unit.OnChanged($event)">
-            <div [attr.title]="unit.desc">{{unit.desc}}</div>
-        </mat-slide-toggle>
+        <div class="row">
+            <mat-slide-toggle labelPosition="before" [checked]="unit.power | async" (change)="unit.OnChanged($event)">
+                <div [attr.title]="unit.desc">{{unit.desc}}</div>
+            </mat-slide-toggle>
+            <span class="full" [ngClass]="unit.isFullClass()">FULL</span>
+        </div>
         <div class="indent">
             <div class="row">
                 <div>Temperature</div>
                 <div>{{unit.temp}}&#8451;</div>
             </div>
-            <div class="row" >
+            <div class="row">
                 <div>Humidity</div>
                 <div>{{unit.humidity}}%</div>
             </div>

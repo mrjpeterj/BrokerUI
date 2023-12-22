@@ -9,3 +9,13 @@
     margin-top: 4px;
     margin-left: 8px;
 }
+
+.full {
+    color: red;
+    font-weight: bold;
+    visibility: collapse;
+
+    &.true {
+        visibility: visible;
+    }
+}
