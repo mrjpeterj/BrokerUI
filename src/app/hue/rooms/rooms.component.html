@@ -1,8 +1,12 @@
-<div *ngFor="let val of rooms" class="rooms-cmp">
-    <span>
-        {{ val.Name }}
-    </span>
-    <button mat-icon-button (click)="OnRoomClicked(val)">
-        <mat-icon>launch</mat-icon>
-    </button>
-</div>
+<h1 mat-dialog-title>Rooms</h1>
+
+<mat-dialog-content>
+    <div *ngFor="let val of rooms" class="rooms-cmp">
+        <span>
+            {{ val.Name }}
+        </span>
+        <button mat-icon-button (click)="OnRoomClicked(val)">
+            <mat-icon>launch</mat-icon>
+        </button>
+    </div>
+</mat-dialog-content>

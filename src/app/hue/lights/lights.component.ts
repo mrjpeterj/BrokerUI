@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
+import { MatDialog } from '@angular/material/dialog';
+
 import { IobrokerService } from '../../iobroker.service';
 import { LightState } from '../lightstate';
+import { RoomsComponent } from '../rooms/rooms.component';
 
 @Component({
     selector: 'app-hue-lights',
@@ -12,11 +15,13 @@ import { LightState } from '../lightstate';
 export class LightsComponent implements OnInit {
 
     private broker: IobrokerService;
+    private dialog: MatDialog;
 
     public lights: LightState[];
 
-    constructor(broker: IobrokerService) {
+    constructor(broker: IobrokerService, dialog: MatDialog) {
         this.broker = broker;
+        this.dialog = dialog;
 
         this.lights = [];
     }
@@ -37,6 +42,12 @@ export class LightsComponent implements OnInit {
                     }
                 }
             }
+        });
+    }
+
+    public ShowRoomDialog() {
+        this.dialog.open(RoomsComponent, {
+
         });
     }
 }

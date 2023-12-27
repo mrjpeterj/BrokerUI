@@ -1,3 +1,6 @@
 <div *ngFor="let val of lights">
     <app-hue-light [state]="val"></app-hue-light>
 </div>
+<div class="rooms">
+    <button mat-raised-button color="primary" (click)="ShowRoomDialog()">Rooms</button>
+</div>
