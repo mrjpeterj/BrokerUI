@@ -1,11 +1,16 @@
 .column {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
 }
 
 .buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: baseline;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
 }

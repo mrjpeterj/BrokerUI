@@ -1,10 +1,10 @@
 <div class="column">
-    <app-slider [disabled]="muted | async" [max]="maxVol | async" [state]="volume"></app-slider>
+    <app-slider class="center" [disabled]="muted | async" [max]="maxVol | async" [state]="volume"></app-slider>
     <div class="buttons">
         <button mat-icon-button (click)="VolumeUp()"><mat-icon>arrow_drop_up</mat-icon></button>
         <app-amp-mute [mute]="muted | async" (changed)="SetMuted($event)"></app-amp-mute>
         <button mat-icon-button (click)="VolumeDown()"><mat-icon>arrow_drop_down</mat-icon></button>
     </div>
 
-    <app-amp-extra-info></app-amp-extra-info>
+    <app-amp-extra-info class="center"></app-amp-extra-info>
 </div>
