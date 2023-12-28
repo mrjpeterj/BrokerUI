@@ -1,6 +1,9 @@
 .list {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 8px;
+    max-width: 110px;
 }
 
 .On
@@ -10,5 +13,5 @@
 
 .Off
 {
-    color: red;
+    background-color: red;
 }

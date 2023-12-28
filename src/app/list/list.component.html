@@ -1,7 +1,5 @@
 <div class="list">
-    <div>
-        <div *ngFor="let val of listeners" [ngClass]="val.state | async">
-            {{val.name}}
-        </div>
+    <div *ngFor="let val of listeners" [ngClass]="val.state | async">
+        {{val.name}}
     </div>
 </div>
