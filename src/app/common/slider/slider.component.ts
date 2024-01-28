@@ -13,9 +13,6 @@ import { IobrokerService } from '../../iobroker.service';
 export class SliderComponent implements OnInit, OnDestroy {
 
     @Input()
-    public vertical: boolean;
-
-    @Input()
     public disabled: boolean;
 
     @Input()
@@ -23,6 +20,9 @@ export class SliderComponent implements OnInit, OnDestroy {
 
     @Input()
     public max: number;
+
+    @Input()
+    public maxJump: number;
 
     public get state(): BrokerNumberState | null {
         return this.stateHolder;
@@ -58,7 +58,8 @@ export class SliderComponent implements OnInit, OnDestroy {
         this.max = 100;
         this.value = 0;
 
-        this.vertical = false;
+        this.maxJump = 0;
+
         this.disabled = false;
     }
 
@@ -73,6 +74,20 @@ export class SliderComponent implements OnInit, OnDestroy {
 
     public OnChanged() {
         if (this.stateHolder != null) {
+            if (this.maxJump) {
+                const current = this.stateHolder.Value();
+                if (Math.abs(current - this.value) > this.maxJump) {
+                    // clamp value down
+                    if (current < this.value) {
+                        // jump up was too high
+                        this.value = current + this.maxJump;
+                    } else {
+                        // jump up was too low
+                        this.value = current - this.maxJump;
+                    }
+                }
+            }
+
             this.broker.SetState(this.stateHolder, this.value);
         }
     }
