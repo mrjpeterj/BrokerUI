@@ -9,7 +9,8 @@ import { RoomComponent } from '../room/room.component';
     selector: 'app-hue-rooms',
     templateUrl: './rooms.component.html',
     styleUrls: ['./rooms.component.scss'],
-    providers: [IobrokerService]
+    providers: [IobrokerService],
+    standalone: false
 })
 export class RoomsComponent implements OnInit {
 

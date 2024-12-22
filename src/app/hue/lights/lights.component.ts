@@ -10,7 +10,8 @@ import { RoomsComponent } from '../rooms/rooms.component';
     selector: 'app-hue-lights',
     templateUrl: './lights.component.html',
     styleUrls: ['./lights.component.scss'],
-    providers: [IobrokerService]
+    providers: [IobrokerService],
+    standalone: false
 })
 export class LightsComponent implements OnInit {
 

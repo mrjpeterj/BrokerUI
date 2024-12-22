@@ -7,7 +7,8 @@ import { LightState } from '../lightstate';
 @Component({
     selector: 'app-hue-lightsettings',
     templateUrl: './lightsettings.component.html',
-    styleUrls: ['./lightsettings.component.scss']
+    styleUrls: ['./lightsettings.component.scss'],
+    standalone: false
 })
 export class LightsettingsComponent implements OnInit {
 

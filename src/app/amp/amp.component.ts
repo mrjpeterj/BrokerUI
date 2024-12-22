@@ -8,7 +8,8 @@ import { IobrokerService } from '../iobroker.service';
 @Component({
     selector: 'app-amp',
     templateUrl: './amp.component.html',
-    styleUrls: ['./amp.component.scss']
+    styleUrls: ['./amp.component.scss'],
+    standalone: false
 })
 export class AmpComponent implements OnInit {
 

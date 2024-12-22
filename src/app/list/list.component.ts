@@ -28,7 +28,8 @@ class MachineState {
     selector: 'app-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
-    providers: [IobrokerService]
+    providers: [IobrokerService],
+    standalone: false
 })
 export class ListComponent implements OnInit {
 

@@ -9,7 +9,8 @@ import { LightsettingsComponent } from '../lightsettings/lightsettings.component
 @Component({
     selector: 'app-hue-light',
     templateUrl: './light.component.html',
-    styleUrls: ['./light.component.scss']
+    styleUrls: ['./light.component.scss'],
+    standalone: false
 })
 export class LightComponent implements OnInit {
 

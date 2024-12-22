@@ -3,7 +3,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
     selector: 'app-amp-mute',
     templateUrl: './mute.component.html',
-    styleUrls: ['./mute.component.scss']
+    styleUrls: ['./mute.component.scss'],
+    standalone: false
 })
 export class MuteComponent {
 

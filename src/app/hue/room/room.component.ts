@@ -12,7 +12,8 @@ import { RoomState } from '../roomstate';
     selector: 'app-hue-room',
     templateUrl: './room.component.html',
     styleUrls: ['./room.component.scss'],
-    providers: [IobrokerService]
+    providers: [IobrokerService],
+    standalone: false
 })
 export class RoomComponent implements OnInit {
 
