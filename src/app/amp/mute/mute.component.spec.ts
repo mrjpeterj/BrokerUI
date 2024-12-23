@@ -8,7 +8,7 @@ describe('MuteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MuteComponent ]
+      imports: [ MuteComponent ]
     })
     .compileComponents();
   });

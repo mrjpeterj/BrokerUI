@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
@@ -5,11 +6,25 @@ import { Observable } from 'rxjs';
 import { IobrokerService } from './iobroker.service';
 import { BrokerBoolState } from '@mrjpeterj/broker-lib';
 
+import { AirComponent } from './air/air.component';
+import { AmpComponent } from './amp/amp.component';
+import { LightsComponent } from './hue/lights/lights.component';
+import { ListComponent } from './list/list.component';
+import { OptionsComponent } from './options/options.component';
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    standalone: false
+    imports: [
+        CommonModule,
+
+        LightsComponent,
+        ListComponent,
+        AirComponent,
+        AmpComponent,
+        OptionsComponent,
+    ]
 })
 export class AppComponent implements OnInit {
 

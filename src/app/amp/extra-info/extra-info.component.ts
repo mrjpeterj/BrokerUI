@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 import { combineLatest, Observable } from 'rxjs';
@@ -11,7 +12,7 @@ import { IobrokerService } from '../../iobroker.service';
     selector: 'app-amp-extra-info',
     templateUrl: './extra-info.component.html',
     styleUrls: ['./extra-info.component.scss'],
-    standalone: false
+    imports: [ CommonModule]
 })
 export class ExtraInfoComponent implements OnInit {
 

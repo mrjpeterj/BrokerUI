@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+
+import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { Observable } from 'rxjs';
 
@@ -35,7 +37,10 @@ class BoolOptionHolder {
     selector: 'app-options',
     templateUrl: './options.component.html',
     styleUrls: ['./options.component.scss'],
-    standalone: false
+    imports: [
+        CommonModule,
+        MatSlideToggleModule
+    ]
 })
 export class OptionsComponent implements OnInit {
 

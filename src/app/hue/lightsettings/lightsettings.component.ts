@@ -1,14 +1,18 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatSliderChange } from '@angular/material/slider';
 
 import { LightState } from '../lightstate';
+import { SliderComponent } from '../../common/slider/slider.component';
 
 @Component({
     selector: 'app-hue-lightsettings',
     templateUrl: './lightsettings.component.html',
     styleUrls: ['./lightsettings.component.scss'],
-    standalone: false
+    imports: [
+        SliderComponent,
+        MatDialogModule
+    ]
 })
 export class LightsettingsComponent implements OnInit {
 

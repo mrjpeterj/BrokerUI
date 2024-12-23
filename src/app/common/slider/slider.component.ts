@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
+import { MatSliderModule } from '@angular/material/slider';
+
 import { Subscription } from 'rxjs';
 
 import { BrokerNumberState } from '@mrjpeterj/broker-lib';
@@ -9,7 +11,7 @@ import { IobrokerService } from '../../iobroker.service';
     selector: 'app-slider',
     templateUrl: './slider.component.html',
     styleUrls: ['./slider.component.scss'],
-    standalone: false
+    imports: [MatSliderModule]
 })
 export class SliderComponent implements OnInit, OnDestroy {
 

@@ -1,6 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -149,7 +150,10 @@ class TuyaAirInfo {
     selector: 'app-air',
     templateUrl: './air.component.html',
     styleUrls: ['./air.component.scss'],
-    standalone: false
+    imports: [
+        CommonModule,
+        MatSlideToggleModule
+    ]
 })
 export class AirComponent implements OnInit {
 

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
@@ -29,7 +30,9 @@ class MachineState {
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
     providers: [IobrokerService],
-    standalone: false
+    imports:[
+        CommonModule
+    ]
 })
 export class ListComponent implements OnInit {
 

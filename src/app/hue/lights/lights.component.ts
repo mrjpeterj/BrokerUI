@@ -1,8 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 
 import { IobrokerService } from '../../iobroker.service';
+
+import { LightComponent } from '../light/light.component';
 import { LightState } from '../lightstate';
 import { RoomsComponent } from '../rooms/rooms.component';
 
@@ -11,7 +15,11 @@ import { RoomsComponent } from '../rooms/rooms.component';
     templateUrl: './lights.component.html',
     styleUrls: ['./lights.component.scss'],
     providers: [IobrokerService],
-    standalone: false
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        LightComponent
+    ]
 })
 export class LightsComponent implements OnInit {
 

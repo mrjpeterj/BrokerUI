@@ -1,7 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
 
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { LightState } from '../lightstate';
 import { LightsettingsComponent } from '../lightsettings/lightsettings.component';
@@ -10,7 +13,13 @@ import { LightsettingsComponent } from '../lightsettings/lightsettings.component
     selector: 'app-hue-light',
     templateUrl: './light.component.html',
     styleUrls: ['./light.component.scss'],
-    standalone: false
+    imports: [
+        CommonModule,
+
+        MatButtonModule,
+        MatIconModule,
+        MatSlideToggleModule
+    ]
 })
 export class LightComponent implements OnInit {
 

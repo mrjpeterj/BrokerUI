@@ -1,15 +1,31 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+
 import { Observable } from 'rxjs';
 
 import { BrokerBoolState, BrokerNumberState } from '@mrjpeterj/broker-lib';
 
 import { IobrokerService } from '../iobroker.service';
 
+import { SliderComponent } from '../common/slider/slider.component';
+import { ExtraInfoComponent } from './extra-info/extra-info.component';
+import { MuteComponent } from './mute/mute.component';
+
 @Component({
     selector: 'app-amp',
     templateUrl: './amp.component.html',
     styleUrls: ['./amp.component.scss'],
-    standalone: false
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatIconModule,
+        MuteComponent,
+        ExtraInfoComponent,
+        SliderComponent
+    ]
 })
 export class AmpComponent implements OnInit {
 

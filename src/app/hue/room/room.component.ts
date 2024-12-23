@@ -1,6 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, Inject } from '@angular/core';
 
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 import { IobrokerService } from '../../iobroker.service';
 
@@ -13,7 +16,12 @@ import { RoomState } from '../roomstate';
     templateUrl: './room.component.html',
     styleUrls: ['./room.component.scss'],
     providers: [IobrokerService],
-    standalone: false
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatIconModule
+    ]
 })
 export class RoomComponent implements OnInit {
 
