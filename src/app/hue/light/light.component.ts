@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, model } from '@angular/core';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -23,29 +23,28 @@ import { LightsettingsComponent } from '../lightsettings/lightsettings.component
 })
 export class LightComponent implements OnInit {
 
-    @Input()
-    public state: LightState | null;
+    public readonly state = model.required<LightState>();
 
     private dialog: MatDialog;
 
     constructor(dialog: MatDialog) {
         this.dialog = dialog;
-
-        this.state = null;
     }
 
     ngOnInit(): void {
     }
 
     public OnChanged(state: MatSlideToggleChange) {
-        if (this.state != null) {
-            this.state.UpdateOnState(state.checked);
+        var lightState = this.state();
+
+        if (lightState) {
+            lightState.UpdateOnState(state.checked);
         }
     }
 
     public ShowDialog() {
-        this.dialog.open(LightsettingsComponent, {
-            data: this.state
+        this.dialog.open<LightsettingsComponent, LightState>(LightsettingsComponent, {
+            data: this.state()
         });
     }
 }

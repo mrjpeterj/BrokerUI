@@ -1,6 +1,6 @@
 <div class="light-cmp">
-    <mat-slide-toggle labelPosition="after" [checked]="state?.onSwitch | async" (change)="OnChanged($event)">
-        {{state?.Name}}
+    <mat-slide-toggle labelPosition="after" [checked]="state().onSwitch | async" (change)="OnChanged($event)">
+        {{state().Name}}
     </mat-slide-toggle>
     <button mat-icon-button (click)="ShowDialog()">
         <mat-icon>settings_brightness</mat-icon>

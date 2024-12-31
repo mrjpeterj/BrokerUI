@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, input } from '@angular/core';
 
 import { MatSliderModule } from '@angular/material/slider';
 
@@ -15,55 +15,25 @@ import { IobrokerService } from '../../iobroker.service';
 })
 export class SliderComponent implements OnInit, OnDestroy {
 
-    @Input()
-    public disabled: boolean;
+    public disabled = input<boolean>(false);
+    public min = input<number>(0);
+    public max = input<number>(100);
+    public maxJump = input<number>(0);
 
-    @Input()
-    public min: number;
-
-    @Input()
-    public max: number;
-
-    @Input()
-    public maxJump: number;
-
-    public get state(): BrokerNumberState | null {
-        return this.stateHolder;
-    }
-
-    @Input()
-    public set state(val: BrokerNumberState | null) {
-        this.stateHolder = val;
-
-        if (val != null) {
-            this.stateListener = val.ListenForValue().subscribe({
-                next: (v) => {
-                    this.value = v;
-                }
-            });
-        }
-    }
+    public state = input.required<BrokerNumberState, BrokerNumberState>({transform: this.UpdateState.bind(this)});
 
     public value: number;
 
     private broker: IobrokerService;
 
-    private stateHolder: BrokerNumberState | null;
     private stateListener: Subscription | null;
 
     constructor(broker: IobrokerService) {
         this.broker = broker;
 
-        this.stateHolder = null;
         this.stateListener = null;
 
-        this.min = 0;
-        this.max = 100;
         this.value = 0;
-
-        this.maxJump = 0;
-
-        this.disabled = false;
     }
 
     ngOnInit(): void {
@@ -75,23 +45,39 @@ export class SliderComponent implements OnInit, OnDestroy {
         }
     }
 
+
+    UpdateState(val : BrokerNumberState): BrokerNumberState {
+
+        if (val != null) {
+            this.stateListener = val.ListenForValue().subscribe({
+                next: (v) => {
+                    this.value = v;
+                }
+            });
+        }
+
+        return val;
+    }
+
     public OnChanged() {
-        if (this.stateHolder != null) {
-            if (this.maxJump) {
-                const current = this.stateHolder.Value();
-                if (Math.abs(current - this.value) > this.maxJump) {
+        var theState = this.state();
+
+        if (theState != null) {
+            if (this.maxJump() > 0) {
+                const current = theState.Value();
+                if (Math.abs(current - this.value) > this.maxJump()) {
                     // clamp value down
                     if (current < this.value) {
                         // jump up was too high
-                        this.value = current + this.maxJump;
+                        this.value = current + this.maxJump();
                     } else {
                         // jump up was too low
-                        this.value = current - this.maxJump;
+                        this.value = current - this.maxJump();
                     }
                 }
             }
 
-            this.broker.SetState(this.stateHolder, this.value);
+            this.broker.SetState(theState, this.value);
         }
     }
 }
