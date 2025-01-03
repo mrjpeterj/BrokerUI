@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
@@ -32,7 +32,9 @@ export class AppComponent implements OnInit {
 
     public hasAmp: Observable<boolean> | null;
 
-    constructor(broker: IobrokerService) {
+    constructor() {
+        const broker = inject(IobrokerService);
+
         this.broker = broker;
 
         this.hasAmp = null;

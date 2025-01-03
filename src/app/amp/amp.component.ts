@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -40,7 +40,9 @@ export class AmpComponent implements OnInit {
     private volumeUp: BrokerBoolState | null;
     private volumeDown: BrokerBoolState | null;
 
-    constructor(broker: IobrokerService) {
+    constructor() {
+        const broker = inject(IobrokerService);
+
         this.broker = broker;
 
         this.muteState = null;

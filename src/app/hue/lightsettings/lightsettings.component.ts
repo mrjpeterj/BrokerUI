@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatSliderChange } from '@angular/material/slider';
 
@@ -21,7 +21,9 @@ export class LightsettingsComponent implements OnInit {
     public brightMin: number;
     public brightMax: number;
 
-    constructor(@Inject(MAT_DIALOG_DATA) data: LightState) {
+    constructor() {
+        const data = inject<LightState>(MAT_DIALOG_DATA);
+
 
         this.light = data;
 

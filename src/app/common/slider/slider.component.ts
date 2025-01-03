@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, input } from '@angular/core';
+import { Component, OnInit, OnDestroy, input, inject } from '@angular/core';
 
 import { MatSliderModule } from '@angular/material/slider';
 
@@ -28,7 +28,9 @@ export class SliderComponent implements OnInit, OnDestroy {
 
     private stateListener: Subscription | null;
 
-    constructor(broker: IobrokerService) {
+    constructor() {
+        const broker = inject(IobrokerService);
+
         this.broker = broker;
 
         this.stateListener = null;

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -28,7 +28,10 @@ export class LightsComponent implements OnInit {
 
     public lights: LightState[];
 
-    constructor(broker: IobrokerService, dialog: MatDialog) {
+    constructor() {
+        const broker = inject(IobrokerService);
+        const dialog = inject(MatDialog);
+
         this.broker = broker;
         this.dialog = dialog;
 

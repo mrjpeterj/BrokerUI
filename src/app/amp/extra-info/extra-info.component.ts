@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -23,7 +23,9 @@ export class ExtraInfoComponent implements OnInit {
 
     public extraLines: Observable<string>[];
 
-    constructor(broker: IobrokerService) {
+    constructor() {
+        const broker = inject(IobrokerService);
+
         this.broker = broker;
 
         this.inputName = null;

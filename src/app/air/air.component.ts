@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 
@@ -162,7 +162,9 @@ export class AirComponent implements OnInit {
     public airUnits: AirInfo[];
     public airUnits2: TuyaAirInfo[];
 
-    constructor(broker: IobrokerService) {
+    constructor() {
+        const broker = inject(IobrokerService);
+
         this.broker = broker;
 
         this.airUnits = [];

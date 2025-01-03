@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -28,7 +28,10 @@ export class RoomsComponent implements OnInit {
 
     public rooms: RoomState[];
 
-    constructor(broker: IobrokerService, dialog: MatDialog) {
+    constructor() {
+        const broker = inject(IobrokerService);
+        const dialog = inject(MatDialog);
+
         this.broker = broker;
         this.dialog = dialog;
 
@@ -49,7 +52,7 @@ export class RoomsComponent implements OnInit {
     }
 
     public OnRoomClicked(room: RoomState) {
-        this.dialog.open(RoomComponent, {
+        this.dialog.open<RoomComponent, RoomState>(RoomComponent, {
             data: room,
             maxHeight: '90%'
         });

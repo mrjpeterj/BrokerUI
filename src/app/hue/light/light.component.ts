@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, model } from '@angular/core';
+import { Component, OnInit, model, inject } from '@angular/core';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,7 +27,9 @@ export class LightComponent implements OnInit {
 
     private dialog: MatDialog;
 
-    constructor(dialog: MatDialog) {
+    constructor() {
+        const dialog = inject(MatDialog);
+
         this.dialog = dialog;
     }
 

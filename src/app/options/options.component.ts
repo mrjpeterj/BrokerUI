@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { MatSlideToggleChange, MatSlideToggleModule } from '@angular/material/slide-toggle';
 
@@ -48,7 +48,9 @@ export class OptionsComponent implements OnInit {
 
     public boolOptions: BoolOptionHolder[];
 
-    constructor(broker: IobrokerService) {
+    constructor() {
+        const broker = inject(IobrokerService);
+
         this.broker = broker;
 
         this.boolOptions = [];

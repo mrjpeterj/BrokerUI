@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
@@ -29,7 +29,11 @@ export class RoomComponent implements OnInit {
     private dialog: MatDialogRef<RoomComponent>;
     public room: RoomState;
 
-    constructor(broker: IobrokerService, dialogRef: MatDialogRef<RoomComponent>, @Inject(MAT_DIALOG_DATA) data: RoomState) {
+    constructor() {
+        const broker = inject(IobrokerService);
+        const dialogRef = inject<MatDialogRef<RoomComponent>>(MatDialogRef);
+        const data = inject<RoomState>(MAT_DIALOG_DATA);
+
 
         this.broker = broker;
 
